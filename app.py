@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:23:08
+# @Last Modified time: 2019-11-09 18:25:35
 
 from src.groupme.groupme import GroupMe  #, GroupMeBot
 
@@ -17,7 +17,7 @@ def index():
     return jsonify({"Message": "Response"})
 
 
-@app.route('/groupme/<randomint>')
+@app.route('/groupme/<randomint>', methods=['POST'])
 def call_bot(randomint):
     """Call Bot."""
     G = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
