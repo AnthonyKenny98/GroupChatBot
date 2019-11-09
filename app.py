@@ -3,9 +3,9 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:45:10
+# @Last Modified time: 2019-11-09 18:55:46
 
-from src import controller
+import controller
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
