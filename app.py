@@ -3,9 +3,9 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:25:35
+# @Last Modified time: 2019-11-09 18:31:54
 
-from src.groupme.groupme import GroupMe  #, GroupMeBot
+from src.groupme.groupme import GroupMeBot
 
 from flask import Flask, jsonify, request
 app = Flask(__name__)
@@ -20,8 +20,8 @@ def index():
 @app.route('/groupme/<randomint>', methods=['POST'])
 def call_bot(randomint):
     """Call Bot."""
-    G = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
-    G.post_message("Received")
+    bot = GroupMeBot('4a8cf510b7541a8a3c96eb17a5')
+    bot.post_message("Received")
     return jsonify({"Message": "Response"})
 
 if __name__ == '__main__':
