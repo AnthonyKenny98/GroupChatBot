@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:17:26
+# @Last Modified time: 2019-11-09 18:20:23
 
 from src.groupme.groupme import GroupMe  #, GroupMeBot
 
@@ -21,7 +21,7 @@ def index():
 def call_bot(randomint):
     """Call Bot."""
     G = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
-    G.send_message("Received this: " + str(request.data))
+    G.post_message("Received this: " + str(request.data))
     return jsonify({"Message": "Response"})
 
 if __name__ == '__main__':
