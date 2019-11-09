@@ -3,11 +3,11 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 17:41:35
+# @Last Modified time: 2019-11-09 18:04:26
 
-from src.groupme.groupme import GroupMeBot
+# from src.groupme.groupme import GroupMe, GroupMeBot
 
-from flask import Flask, jsonify  # , request
+from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
@@ -20,7 +20,8 @@ def index():
 @app.route('/groupme/<randomint>')
 def call_bot(randomint):
     """Call Bot."""
-    return jsonify({"ID": randomint})
+    print(request.data)
+    return jsonify({"Message": "Response"})
 
 if __name__ == '__main__':
     app.run(threaded=True, port=5000)
