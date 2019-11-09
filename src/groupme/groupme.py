@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 17:08:27
+# @Last Modified time: 2019-11-09 17:54:29
 
 # '4a8cf510b7541a8a3c96eb17a5'
 
@@ -61,12 +61,20 @@ class GroupMeBot:
     def __init__(self, bot_id):
         """Initialize GroupMe Bot."""
         self.id = bot_id
-        self.groupme = GroupMe(ACCESS_TOKEN)
-        self.headers = self.groupme.headers
+        self.baseURL = 'https://api.groupme.com/v3'
+        self.headers = {'content-type': 'application/json'}
 
-    def send_message(self, message):
+    def build_url(self, endpoint):
+        """Return URL for given endpoint."""
+        url_path = {
+            'bots': '/bots',
+            'post': '/bots/post'
+        }
+        return self.baseURL + url_path[endpoint]
+
+    def post_message(self, message):
         """Send message as bot."""
-        url = self.groupme.baseURL + '/bots/post'
+        url = self.build_url['post']
         payload = json.dumps({
             "bot_id": self.id,
             "text": message
@@ -74,12 +82,14 @@ class GroupMeBot:
         return requests.post(url, headers=self.headers, data=payload)
 
 
-def setup_bot(bot_name):
+def setup_bot(callback_url):
     """Set Up Bot in a particular GroupMe group chat. Return Bot ID."""
     groupme = GroupMe(ACCESS_TOKEN)
 
     # Get list of n groups
     groups = groupme.get_groups(20)
+
+    bot_name = input("What would you like your bot to be named: ")
 
     # Seek user input on group for which bot should be created
     print("Select the group for which you would like to create this bot\n")
@@ -95,11 +105,12 @@ def setup_bot(bot_name):
         "bot": {
             "name": bot_name,
             "group_id": group_id,
-            "callback_url": "https://example.com/bot_callback1"
+            "callback_url": callback_url
         }
     })
     url = groupme.build_url('bots')
 
     # Make Post request
     bot = requests.post(url, headers=groupme.headers, data=payload)
-    return bot.json()['response']['bot']['bot_id']
+    print(bot.text)
+    return bot.json() #['response']['bot']['bot_id']
