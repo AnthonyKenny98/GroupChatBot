@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:55:31
+# @Last Modified time: 2019-11-09 18:57:28
 
 
 from src.groupme.groupme import GroupMeBot
@@ -12,7 +12,7 @@ from src.groupme.groupme import GroupMeBot
 def handle(data):
     """Handle incoming data from GroupMe."""
     # Don't reply to self
-    if data['user_type'] == 'bot':
+    if data['sender_type'] == 'bot':
         return
 
     # Init Bot
