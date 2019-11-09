@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 17:54:29
+# @Last Modified time: 2019-11-09 18:33:51
 
 # '4a8cf510b7541a8a3c96eb17a5'
 
@@ -74,7 +74,7 @@ class GroupMeBot:
 
     def post_message(self, message):
         """Send message as bot."""
-        url = self.build_url['post']
+        url = self.build_url('post')
         payload = json.dumps({
             "bot_id": self.id,
             "text": message
