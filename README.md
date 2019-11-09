@@ -5,6 +5,9 @@
 
 Bot that can be inserted into groupchats.
 
+## Prerequisites
+Heroku CLI installed
+
 ## Api Reference
 
 ## Licensing
