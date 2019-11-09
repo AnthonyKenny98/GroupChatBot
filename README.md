@@ -10,6 +10,8 @@ Heroku CLI installed
 
 ## Api Reference
 
+This project makes heavy use of the [GroupMe API](https://dev.groupme.com/).
+
 ## Licensing
 
 This project is licensed under the MIT License.  See the [LICENSE](LICENSE) file for more information.
