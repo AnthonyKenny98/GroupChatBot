@@ -3,22 +3,24 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 15:05:35
+# @Last Modified time: 2019-11-09 17:12:23
 
 from groupme import GroupMe
+
+ACCESS_TOKEN = "TESTACCESSTOKEN"
 
 
 def test_init():
     """Test Initialization of GroupMe Class."""
-    group = GroupMe()
+    group = GroupMe(ACCESS_TOKEN)
     assert group.baseURL == 'https://api.groupme.com/v3'
     assert group.headers == {'content-type': 'application/json'}
 
 
 def test_get_url():
     """Test get_url function returns correct value."""
-    group = GroupMe()
-    assert group.get_url('send_message', groupID='1234') == \
+    group = GroupMe(ACCESS_TOKEN)
+    assert group.build_url('messages', groupID='1234') == \
         group.baseURL \
         + "/groups/1234/messages?token=" \
         + group.accessToken
