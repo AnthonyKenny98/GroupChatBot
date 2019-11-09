@@ -3,11 +3,12 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:09:50
+# @Last Modified time: 2019-11-09 18:12:14
 
 # from src.groupme.groupme import GroupMe, GroupMeBot
 
 from flask import Flask, jsonify, request
+import sys
 app = Flask(__name__)
 
 
@@ -22,6 +23,7 @@ def call_bot(randomint):
     """Call Bot."""
     print(request.get_json())
     print("OKAYYYYYYY CUCC")
+    sys.stdout.flush()
     return jsonify({"Message": "Response"})
 
 if __name__ == '__main__':
