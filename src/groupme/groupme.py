@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:33:51
+# @Last Modified time: 2019-11-09 18:50:38
 
 # '4a8cf510b7541a8a3c96eb17a5'
 
@@ -113,4 +113,4 @@ def setup_bot(callback_url):
     # Make Post request
     bot = requests.post(url, headers=groupme.headers, data=payload)
     print(bot.text)
-    return bot.json() #['response']['bot']['bot_id']
+    return bot.json()  # ['response']['bot']['bot_id']
