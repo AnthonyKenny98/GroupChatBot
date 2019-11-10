@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 19:08:35
+# @Last Modified time: 2019-11-09 19:23:17
 
 
 from src.groupme.groupme import GroupMeBot, GroupMe
@@ -16,18 +16,14 @@ def handle(data):
         return
 
     groupme = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
-    bots = groupme.get_bots()
 
-    bot_id = None
-    for bot in bots:
-        if bot['group_id'] == data['group_id']:
-            bot_id = bot['bot_id']
+    bots = [b for b in groupme.get_bots() if b['bot_id'] == data['group_id']]
 
-    if bot_id is None:
+    if len(bots) == 0:
         return
 
     # Init Bot
-    bot = GroupMeBot(bot_id)
+    bot = GroupMeBot(bots[0]['bot_id'])
 
     # Post Message from Bot
-    bot.post_message("I'm Back Bitch")
+    bot.post_message("How my dick feel in yo ass pussy boy")
