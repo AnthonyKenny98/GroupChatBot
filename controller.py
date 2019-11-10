@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-10 08:46:15
+# @Last Modified time: 2019-11-10 08:48:15
 
 
 from src.groupme.groupme import GroupMeBot, GroupMe
@@ -17,19 +17,8 @@ def handle(data):
 
     groupme = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
 
+    # Get bots for current group chat
     bots = [b for b in groupme.get_bots() if b['group_id'] == data['group_id']]
-
-    # # Get list of bots
-    # bots = groupme.get_bots()
-
-    # bot_id = None
-    # for bot in bots:
-    #     if bot['group_id'] == data['group_id']:
-    #         bot_id = bot['bot_id']
-
-    # if bot_id is None:
-    #     return
-
     if len(bots) == 0:
         return
 
