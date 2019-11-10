@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:50:38
+# @Last Modified time: 2019-11-09 19:01:47
 
 # '4a8cf510b7541a8a3c96eb17a5'
 
@@ -42,6 +42,11 @@ class GroupMe:
             "per_page": n
         }
         return (requests.get(url, params=payload)).json()['response']
+
+    def get_bots(self):
+        """Return list of bots."""
+        url = self.build_url('bots')
+        return requests.get(url).json()['response']
 
     def post_message(self, message):
         """Send message to Group."""
