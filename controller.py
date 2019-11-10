@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 19:23:17
+# @Last Modified time: 2019-11-10 08:37:52
 
 
 from src.groupme.groupme import GroupMeBot, GroupMe
@@ -26,4 +26,4 @@ def handle(data):
     bot = GroupMeBot(bots[0]['bot_id'])
 
     # Post Message from Bot
-    bot.post_message("How my dick feel in yo ass pussy boy")
+    bot.post_message(bots)
