@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 19:03:24
+# @Last Modified time: 2019-11-09 19:08:35
 
 
 from src.groupme.groupme import GroupMeBot, GroupMe
@@ -15,10 +15,19 @@ def handle(data):
     if data['sender_type'] == 'bot':
         return
 
-    G = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
+    groupme = GroupMe('NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim')
+    bots = groupme.get_bots()
+
+    bot_id = None
+    for bot in bots:
+        if bot['group_id'] == data['group_id']:
+            bot_id = bot['bot_id']
+
+    if bot_id is None:
+        return
 
     # Init Bot
-    bot = GroupMeBot('4a8cf510b7541a8a3c96eb17a5')
+    bot = GroupMeBot(bot_id)
 
     # Post Message from Bot
-    bot.post_message(str(G.get_bots()))
+    bot.post_message("I'm Back Bitch")
