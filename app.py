@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 18:55:46
+# @Last Modified time: 2019-11-09 19:12:37
 
 import controller
 from flask import Flask, jsonify, request
@@ -21,6 +21,7 @@ def call_bot(randomint):
     """Call Bot."""
     controller.handle(request.json)
     return jsonify({"Message": "Response"})
+
 
 if __name__ == '__main__':
     app.run(threaded=True, port=5000)
