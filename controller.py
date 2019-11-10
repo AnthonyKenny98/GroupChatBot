@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 18:40:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-10 08:37:52
+# @Last Modified time: 2019-11-10 08:39:18
 
 
 from src.groupme.groupme import GroupMeBot, GroupMe
@@ -23,7 +23,7 @@ def handle(data):
         return
 
     # Init Bot
-    bot = GroupMeBot(bots[0]['bot_id'])
+    bot = GroupMeBot('4a8cf510b7541a8a3c96eb17a5')
 
     # Post Message from Bot
     bot.post_message(bots)
