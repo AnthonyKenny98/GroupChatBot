@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:39:10
+# @Last Modified time: 2019-11-11 12:44:46
 
 import requests
 import json
@@ -27,7 +27,7 @@ class GroupMeChatBot:
         self.bot = GroupMeBot([
             b for b in self.user.get_bots()
             if b['group_id'] == self.message['group_id']
-        ][0]['bot_id'])
+        ][0])
 
         self.react()
 
@@ -37,7 +37,11 @@ class GroupMeChatBot:
         if self.message['sender_type'] == 'bot':
             return
         else:
-            self.bot.post_message(str(self.message))
+            self.bot.post_message(str(self.introduce))
+
+    def introduce(self):
+        """Introduce."""
+        return "Hello, my name is {}".format(self.bot.name)
 
 
 class GroupMe:
@@ -70,9 +74,10 @@ class GroupMe:
 class GroupMeBot:
     """Interface for GroupMe Bot."""
 
-    def __init__(self, bot_id):
+    def __init__(self, bot_data):
         """Initialize GroupMe Bot."""
-        self.id = bot_id
+        self.id = bot_data['bot_id']
+        self.name = bot_data['name']
         self.baseURL = 'https://api.groupme.com/v3/bots'
         self.headers = {'content-type': 'application/json'}
 
