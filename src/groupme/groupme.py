@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:35:28
+# @Last Modified time: 2019-11-11 12:37:50
 
 import requests
 import json
@@ -34,10 +34,10 @@ class GroupMeChatBot:
     def react(self):
         """React to the message that awoke the bot."""
         # Do not react to own message
-        if self.message['sender_id'] == self.bot.id:
+        if self.message['sender_type'] == 'bot':
             return
         else:
-            self.bot.post_message("How my dick feel in yo ass pussy boi")
+            self.bot.post_message("Yes Master")
 
 
 class GroupMe:
