@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:29:59
+# @Last Modified time: 2019-11-11 12:31:33
 
 import requests
 import json
@@ -28,8 +28,6 @@ class GroupMeChatBot:
             b for b in self.user.get_bots()
             if b['group_id'] == self.message['group_id']
         ][0]['bot_id'])
-
-        self.react()
 
     def react(self):
         """React to the message that awoke the bot."""
