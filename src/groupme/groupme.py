@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:28:51
+# @Last Modified time: 2019-11-11 12:29:59
 
 import requests
 import json
@@ -24,7 +24,7 @@ class GroupMeChatBot:
         self.user = GroupMe(ACCESS_TOKEN)
 
         # Get correct bot for callback_data
-        self.bot = GroupMe([
+        self.bot = GroupMeBot([
             b for b in self.user.get_bots()
             if b['group_id'] == self.message['group_id']
         ][0]['bot_id'])
