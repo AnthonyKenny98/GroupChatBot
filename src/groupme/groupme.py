@@ -3,35 +3,54 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 15:02:13
+# @Last Modified time: 2019-11-11 18:11:49
 
+import os
 import requests
 import json
 from ..chatbot import ChatBot
 
-ACCESS_TOKEN = 'NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim'
+CREDENTIALS = ['access_token']
 
 
 class GroupMeChatBot(ChatBot):
     """Master ChatBot Class for GroupMe."""
 
+    @staticmethod
+    def get_credentials():
+        """Return dict of credentials from either secure or example folder.
+
+        To change credentials update the CREDENTIALS constant at the top
+        of this file.
+        """
+        # Get credentials filepath
+        path = os.path.dirname(os.path.realpath(__file__))
+        path += '/secure' if os.path.isdir(path + '/secure') else '/example'
+
+        credentials = {}
+        for credential in CREDENTIALS:
+            with open(path + '/' + credential + '.credentials', 'r') as f:
+                credentials[credential] = f.read()
+        return credentials
+
     def __init__(self, data):
         """Initialize GroupMe Chat Bot Instance."""
-        super().__init__(self)
-
-        # Message that awoke the bot
-        self.data = data
-
         # Init GroupMeUser instance
-        self.user = GroupMe(ACCESS_TOKEN)
+        self.user = GroupMe(self.get_credentials()['access_token'])
 
         # Get correct bot for callback_data
         self.bot = GroupMeBot([
             b for b in self.user.get_bots()
-            if b['group_id'] == self.data['group_id']
+            if b['group_id'] == data['group_id']
         ][0]['bot_id'])
 
-        self.react()
+        # Message that awoke the bot
+        self.stimulus = {}
+        self.stimulus.update({
+            'data': data
+        })
+
+        super().__init__()
 
     def post_message(self, text):
         """Post message."""
@@ -43,7 +62,7 @@ class GroupMeChatBot(ChatBot):
 
     def api_pre_react_checks(self):
         """Go through API specific pre-react checks."""
-        return self.data['sender_type'] != 'bot'
+        return self.stimulus['data']['sender_type'] != 'bot'
 
 
 class GroupMe:
@@ -103,7 +122,14 @@ class GroupMeBot:
 
 def setup_bot(callback_url):
     """Set Up Bot in a particular GroupMe group chat. Return Bot ID."""
-    groupme = GroupMe(ACCESS_TOKEN)
+    access_token = input("Please input your GroupMe Account Access Token: ")
+
+    this_path = os.path.dirname(os.path.realpath(__file__))
+    os.makedirs(this_path + '/secure', exist_ok=True)
+    with open(this_path + '/secure/access_token.credentials', 'w') as f:
+        f.write(access_token)
+
+    groupme = GroupMe(access_token)
 
     # Get list of groups
     groups = groupme.get_groups()

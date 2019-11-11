@@ -4,7 +4,10 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 15:01:36
+# @Last Modified time: 2019-11-11 18:03:50
+
+import json
+import os
 
 
 class ChatBot:
@@ -13,10 +16,18 @@ class ChatBot:
     Is seperate to specific applications.
     """
 
-    def __init__(self, bravery=0.1):
+    def __init__(self):
         """Initialize ChatBot."""
-        self.name = 'ChatBot Name'
-        self.bravery = bravery
+        # Import config settings
+        path = os.path.dirname(os.path.realpath(__file__))
+        with open(path + '/config/default.config', 'r') as f:
+            settings = json.load(f)
+
+        # Load Settings
+        self.name = settings['name']
+        self.bravery = float(settings['bravery'])
+
+        self.react()
 
     def post_message(self):
         """Send Message as Bot.
@@ -38,7 +49,7 @@ class ChatBot:
         """React to message that awoke the bot."""
         if not self.api_pre_react_checks():
             return
-        self.post_message("Test Message")
+        self.post_message(self.introduce())
 
     def introduce(self):
         """Introduce."""
