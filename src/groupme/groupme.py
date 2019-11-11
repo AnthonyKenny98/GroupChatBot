@@ -3,13 +3,11 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 14:41:12
+# @Last Modified time: 2019-11-11 14:47:55
 
 import requests
 import json
 from ..chatbot import ChatBot
-
-# from .chatbot import ChatBot
 
 ACCESS_TOKEN = 'NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim'
 
