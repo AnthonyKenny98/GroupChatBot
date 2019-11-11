@@ -3,9 +3,9 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:57:48
+# @Last Modified time: 2019-11-11 14:45:17
 
-from src.groupme.groupme import GroupMeChatBot
+from src.groupme import GroupMeChatBot
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
