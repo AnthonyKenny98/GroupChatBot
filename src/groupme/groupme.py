@@ -3,19 +3,24 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:58:13
+# @Last Modified time: 2019-11-11 14:41:12
 
 import requests
 import json
+from ..chatbot import ChatBot
+
+# from .chatbot import ChatBot
 
 ACCESS_TOKEN = 'NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim'
 
 
-class GroupMeChatBot:
+class GroupMeChatBot(ChatBot):
     """Master ChatBot Class for GroupMe."""
 
     def __init__(self, data):
         """Initialize GroupMe Chat Bot Instance."""
+        super().__init__(self)
+
         # Message that awoke the bot
         self.data = data
 
@@ -26,7 +31,7 @@ class GroupMeChatBot:
         self.bot = GroupMeBot([
             b for b in self.user.get_bots()
             if b['group_id'] == self.data['group_id']
-        ][0])
+        ][0]['bot_id'])
 
         self.react()
 
@@ -40,7 +45,7 @@ class GroupMeChatBot:
 
     def introduce(self):
         """Introduce."""
-        return "Hello, my name is {}".format(self.bot.name)
+        return "Hello, my name is {}".format(self.name)
 
 
 class GroupMe:
@@ -73,10 +78,9 @@ class GroupMe:
 class GroupMeBot:
     """Interface for GroupMe Bot."""
 
-    def __init__(self, bot_data):
+    def __init__(self, bot_id):
         """Initialize GroupMe Bot."""
-        self.id = bot_data['bot_id']
-        self.name = bot_data['name']
+        self.id = bot_id
         self.baseURL = 'https://api.groupme.com/v3/bots'
         self.headers = {'content-type': 'application/json'}
 

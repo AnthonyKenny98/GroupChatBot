@@ -3,9 +3,9 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:12:04
+# @Last Modified time: 2019-11-11 14:41:40
 
-from groupme import GroupMe
+from .groupme import GroupMe
 
 ACCESS_TOKEN = "TESTACCESSTOKEN"
 
@@ -17,7 +17,7 @@ def test_init():
     # assert group.headers == {'content-type': 'application/json'}
 
 
-def test_get_url():
+def test_build_url():
     """Test get_url function returns correct value."""
     group = GroupMe(ACCESS_TOKEN)
     assert group.build_url('messages', groupID='1234') == \
