@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-09 19:12:37
+# @Last Modified time: 2019-11-11 11:38:30
 
 import controller
 from flask import Flask, jsonify, request
@@ -19,7 +19,7 @@ def index():
 @app.route('/groupme/<randomint>', methods=['POST'])
 def call_bot(randomint):
     """Call Bot."""
-    controller.handle(request.json)
+    controller.groupme(request.json)
     return jsonify({"Message": "Response"})
 
 
