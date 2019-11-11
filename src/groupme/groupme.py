@@ -3,12 +3,13 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 18:11:49
+# @Last Modified time: 2019-11-11 18:54:39
 
 import os
 import requests
 import json
 from ..chatbot import ChatBot
+from ..message import Message
 
 CREDENTIALS = ['access_token']
 
@@ -38,27 +39,31 @@ class GroupMeChatBot(ChatBot):
         # Init GroupMeUser instance
         self.user = GroupMe(self.get_credentials()['access_token'])
 
-        # Get correct bot for callback_data
-        self.bot = GroupMeBot([
-            b for b in self.user.get_bots()
-            if b['group_id'] == data['group_id']
-        ][0]['bot_id'])
+        # Init GroupMeBot instance
+        bots = [b for b in self.user.get_bots()
+                if b['group_id'] == data['group_id']]
+        self.bot = GroupMeBot(bots[0]['bot_id'])
+
+        # Init GroupMeChatBot Name
+        self.name = bots[0]['name']
 
         # Message that awoke the bot
         self.stimulus = {}
         self.stimulus.update({
-            'data': data
+            'data': data,
+            'message': Message(text=data['text'], sender=data['name'])
         })
 
+        # Call super init()
         super().__init__()
 
     def post_message(self, text):
         """Post message."""
         # UNCOMMENT FOR PRODUCTION
-        # return self.bot.post_message(text)
+        return self.bot.post_message(text)
 
         # PRINT FOR TESTING
-        print(text)
+        # print(text)
 
     def api_pre_react_checks(self):
         """Go through API specific pre-react checks."""
