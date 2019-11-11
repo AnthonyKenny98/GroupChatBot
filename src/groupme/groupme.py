@@ -3,22 +3,21 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:46:17
+# @Last Modified time: 2019-11-11 12:58:13
 
 import requests
 import json
 
 ACCESS_TOKEN = 'NCSnlZKP4kcnnkQXZd7SBql045OHQrOXYgHyYiim'
-TEST_GROUP_ID = '55604032'
 
 
 class GroupMeChatBot:
     """Master ChatBot Class for GroupMe."""
 
-    def __init__(self, message):
+    def __init__(self, data):
         """Initialize GroupMe Chat Bot Instance."""
         # Message that awoke the bot
-        self.message = message
+        self.data = data
 
         # Init GroupMeUser instance
         self.user = GroupMe(ACCESS_TOKEN)
@@ -26,7 +25,7 @@ class GroupMeChatBot:
         # Get correct bot for callback_data
         self.bot = GroupMeBot([
             b for b in self.user.get_bots()
-            if b['group_id'] == self.message['group_id']
+            if b['group_id'] == self.data['group_id']
         ][0])
 
         self.react()
@@ -34,7 +33,7 @@ class GroupMeChatBot:
     def react(self):
         """React to the message that awoke the bot."""
         # Do not react to own message
-        if self.message['sender_type'] == 'bot':
+        if self.data['sender_type'] == 'bot':
             return
         else:
             self.bot.post_message(self.introduce())

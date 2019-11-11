@@ -3,9 +3,9 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 11:38:30
+# @Last Modified time: 2019-11-11 12:57:48
 
-import controller
+from src.groupme.groupme import GroupMeChatBot
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def index():
 @app.route('/groupme/<randomint>', methods=['POST'])
 def call_bot(randomint):
     """Call Bot."""
-    controller.groupme(request.json)
+    GroupMeChatBot(request.json)
     return jsonify({"Message": "Response"})
 
 
