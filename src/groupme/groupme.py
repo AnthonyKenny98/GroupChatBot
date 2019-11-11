@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 14:47:55
+# @Last Modified time: 2019-11-11 15:02:13
 
 import requests
 import json
@@ -33,17 +33,17 @@ class GroupMeChatBot(ChatBot):
 
         self.react()
 
-    def react(self):
-        """React to the message that awoke the bot."""
-        # Do not react to own message
-        if self.data['sender_type'] == 'bot':
-            return
-        else:
-            self.bot.post_message(self.introduce())
+    def post_message(self, text):
+        """Post message."""
+        # UNCOMMENT FOR PRODUCTION
+        # return self.bot.post_message(text)
 
-    def introduce(self):
-        """Introduce."""
-        return "Hello, my name is {}".format(self.name)
+        # PRINT FOR TESTING
+        print(text)
+
+    def api_pre_react_checks(self):
+        """Go through API specific pre-react checks."""
+        return self.data['sender_type'] != 'bot'
 
 
 class GroupMe:
