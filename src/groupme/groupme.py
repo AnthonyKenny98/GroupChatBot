@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 12:37:50
+# @Last Modified time: 2019-11-11 12:39:10
 
 import requests
 import json
@@ -37,7 +37,7 @@ class GroupMeChatBot:
         if self.message['sender_type'] == 'bot':
             return
         else:
-            self.bot.post_message("Yes Master")
+            self.bot.post_message(str(self.message))
 
 
 class GroupMe:
