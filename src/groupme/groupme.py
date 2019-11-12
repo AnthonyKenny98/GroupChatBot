@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 23:18:32
+# @Last Modified time: 2019-11-12 14:52:58
 
 import os
 import requests
@@ -25,17 +25,16 @@ class GroupMeChatBot(ChatBot):
         of this file.
         """
         credentials = {}
-        try:
-            for credential in CREDENTIALS:
-                credentials[credential] = os.environ[credential]
-        except Exception:
-            # Get credentials filepath
-            path = os.path.dirname(os.path.realpath(__file__))
-            path += '/secure' if os.path.isdir(path + '/secure') \
-                else '/example'
+        # Get credentials filepath
+        path = os.path.dirname(os.path.realpath(__file__))
+        if os.path.isdir(path + '/secure'):
+            path += '/secure'
             for credential in CREDENTIALS:
                 with open(path + '/' + credential + '.credentials', 'r') as f:
                     credentials[credential] = f.read()
+        else:
+            for credential in CREDENTIALS:
+                credentials[credential] = os.environ[credential]
         return credentials
 
     def __init__(self, data):

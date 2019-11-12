@@ -3,9 +3,11 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 23:12:58
+# @Last Modified time: 2019-11-12 14:57:15
 
 from src.groupme import GroupMeChatBot
+import sys
+
 
 TEST_DATA = {
     'attachments': [],
@@ -26,6 +28,8 @@ TEST_DATA = {
 
 def test_init():
     """Test Initialization of ChatBot."""
+    print(str(sys.platform))
+
     g = GroupMeChatBot(TEST_DATA)
 
     # self.bravery
