@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 20:44:25
+# @Last Modified time: 2019-11-11 20:51:35
 
 import json
 import os
@@ -51,14 +51,17 @@ class ChatBot:
 
     def react(self):
         """React to message that awoke the bot."""
-        # Conduct API specific pre-react checks
+        # Execute Logic to decide whether to react
+        #   1) Conduct API specific pre-react checks
         if not self.api_pre_react_checks():
             return
 
-        # With probability inversely proportional to bravery setting,a
-        # don't react
-        if self.bravery < random.uniform(0, 1):
-            return
+        #   2) Always reply if called out
+        if self.name not in self.stimulus['message'].text:
+            #   3) With probability inversely proportional to bravery setting,a
+            #   don't react
+            if self.bravery < random.uniform(0, 1):
+                return
 
         # Post response
         self.post_message(self.insult())
