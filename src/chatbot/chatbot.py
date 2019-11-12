@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 21:51:45
+# @Last Modified time: 2019-11-11 23:13:59
 
 import json
 import os
@@ -26,8 +26,6 @@ class ChatBot:
 
         # Load Settings
         self.bravery = float(settings['bravery'])
-
-        self.react()
 
     def post_message(self):
         """Send Message as Bot.
@@ -89,8 +87,8 @@ class ChatBot:
         """Load txt file into array and return."""
         path = os.path.dirname(os.path.realpath(__file__))
         with open(path + file, 'r') as f:
-            list = f.read().splitlines()
-        return list
+            array = f.read().splitlines()
+        return array
 
     @staticmethod
     def decision_true(probability=0.5):
