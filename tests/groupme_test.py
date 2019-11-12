@@ -3,11 +3,12 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 14:59:49
+# @Last Modified time: 2019-11-12 15:05:02
+
+import os
+import pytest
 
 from src.groupme import GroupMeChatBot
-import sys
-
 
 TEST_DATA = {
     'attachments': [],
@@ -26,75 +27,81 @@ TEST_DATA = {
 }
 
 
+@pytest.mark.skipif('TRAVIS' in os.environ)
 def test_init():
     """Test Initialization of ChatBot."""
-    print(str(sys.platform))
-    assert 1 == 1
-    # g = GroupMeChatBot(TEST_DATA)
+    g = GroupMeChatBot(TEST_DATA)
 
-    # # self.bravery
-    # assert type(g.bravery) is float
-    # assert g.bravery <= 1
-    # assert g.bravery >= 0
+    # self.bravery
+    assert type(g.bravery) is float
+    assert g.bravery <= 1
+    assert g.bravery >= 0
 
 
-# def test_post_message():
-#     """TODO."""
-#     pass
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_post_message():
+    """TODO."""
+    pass
 
 
-# def test_api_pre_react_checks():
-#     """Test is void."""
-#     g = GroupMeChatBot(TEST_DATA)
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_api_pre_react_checks():
+    """Test is void."""
+    g = GroupMeChatBot(TEST_DATA)
 
-#     assert type(g.api_pre_react_checks()) is bool
-
-
-# def test_tag_member():
-#     """Test is void."""
-#     g = GroupMeChatBot(TEST_DATA)
-
-#     assert type(g.tag_member()) is str
-#     assert g.tag_member()[0] == '@'
+    assert type(g.api_pre_react_checks()) is bool
 
 
-# def test_react():
-#     """TODO."""
-#     pass
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_tag_member():
+    """Test is void."""
+    g = GroupMeChatBot(TEST_DATA)
+
+    assert type(g.tag_member()) is str
+    assert g.tag_member()[0] == '@'
 
 
-# def test_introduce():
-#     """Test func returns correct string."""
-#     g = GroupMeChatBot(TEST_DATA)
-#     g.name = "Test"
-
-#     assert type(g.introduce()) == str
-#     assert g.introduce() == "Hello, my name is {}".format(g.name)
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_react():
+    """TODO."""
+    pass
 
 
-# def test_random_phrase():
-#     """Test func returns a string."""
-#     g = GroupMeChatBot(TEST_DATA)
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_introduce():
+    """Test func returns correct string."""
+    g = GroupMeChatBot(TEST_DATA)
+    g.name = "Test"
 
-#     assert type(g.random_phrase()) == str
-
-
-# def test_insult():
-#     """Test func returns correct string."""
-#     g = GroupMeChatBot(TEST_DATA)
-
-#     assert type(g.insult()) == str
-#     assert '@tag_member' not in g.insult()
-#     assert '@noun' not in g.insult()
-#     assert '@adjective' not in g.insult()
+    assert type(g.introduce()) == str
+    assert g.introduce() == "Hello, my name is {}".format(g.name)
 
 
-# def test_load_file():
-#     """Test static method returns list."""
-#     assert type(GroupMeChatBot.load_file('/vocab/nouns.txt')) is list
-#     assert len(GroupMeChatBot.load_file('/vocab/nouns.txt')) > 0
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_random_phrase():
+    """Test func returns a string."""
+    g = GroupMeChatBot(TEST_DATA)
+
+    assert type(g.random_phrase()) == str
 
 
-# def test_decision_true():
-#     """Test static method returns bool."""
-#     assert type(GroupMeChatBot.decision_true()) is bool
+@pytest.mark.skipif('TRAVIS' in os.environ)
+def test_insult():
+    """Test func returns correct string."""
+    g = GroupMeChatBot(TEST_DATA)
+
+    assert type(g.insult()) == str
+    assert '@tag_member' not in g.insult()
+    assert '@noun' not in g.insult()
+    assert '@adjective' not in g.insult()
+
+
+def test_load_file():
+    """Test static method returns list."""
+    assert type(GroupMeChatBot.load_file('/vocab/nouns.txt')) is list
+    assert len(GroupMeChatBot.load_file('/vocab/nouns.txt')) > 0
+
+
+def test_decision_true():
+    """Test static method returns bool."""
+    assert type(GroupMeChatBot.decision_true()) is bool
