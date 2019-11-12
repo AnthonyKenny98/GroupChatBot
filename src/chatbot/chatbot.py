@@ -4,11 +4,12 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 23:13:59
+# @Last Modified time: 2019-11-12 17:47:40
 
 import json
 import os
 import random
+import re
 
 
 class ChatBot:
@@ -62,7 +63,7 @@ class ChatBot:
                 return
 
         # Post response
-        self.post_message(self.insult())
+        self.post_message(self.mad_lib())
 
     def introduce(self):
         """Introduce."""
@@ -72,15 +73,21 @@ class ChatBot:
         """Return a random phrase from vocab."""
         return random.choice(self.load_file('/vocab/phrases.txt'))
 
-    def insult(self):
-        """Return a random insult built from vocab."""
-        insult = random.choice(self.load_file('/vocab/insults.txt'))
-        insult = insult.replace('@adjective', random.choice(
-            self.load_file('/vocab/adjectives.txt')))
-        insult = insult.replace('@noun', random.choice(
-            self.load_file('/vocab/nouns.txt')))
-        insult = insult.replace('@tag_member', self.tag_member())
-        return insult
+    def mad_lib(self):
+        """Return a random mad lib built from vocab."""
+        sentence = random.choice(self.load_file('/vocab/default.sentence'))
+        placeholders = re.findall(r'@\w+', sentence)
+        for placeholder in placeholders:
+            sentence = sentence.replace(placeholder, self.word(placeholder))
+        return sentence
+
+    def word(self, word_type):
+        """Return list of options for a given word_type."""
+        if word_type == '@tag_member':
+            return self.tag_member()
+        else:
+            return random.choice(
+                self.load_file('/vocab/default.' + word_type[1:]))
 
     @staticmethod
     def load_file(file):

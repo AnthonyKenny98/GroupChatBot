@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 14:52:58
+# @Last Modified time: 2019-11-12 17:28:58
 
 import os
 import requests
@@ -63,10 +63,10 @@ class GroupMeChatBot(ChatBot):
     def post_message(self, text):
         """Post message."""
         # UNCOMMENT FOR PRODUCTION
-        return self.bot.post_message(text)
+        # return self.bot.post_message(text)
 
         # PRINT FOR TESTING
-        # print(text)
+        print(text)
 
     def api_pre_react_checks(self):
         """Go through API specific pre-react checks."""

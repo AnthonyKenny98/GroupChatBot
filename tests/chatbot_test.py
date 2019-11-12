@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 23:05:45
+# @Last Modified time: 2019-11-12 17:50:53
 
 from src.chatbot import ChatBot
 
@@ -60,7 +60,7 @@ def test_random_phrase():
     assert type(c.random_phrase()) == str
 
 
-def test_insult():
+def test_mad_lib():
     """TODO."""
     """Test func returns correct string."""
     # c = ChatBot()
@@ -72,10 +72,15 @@ def test_insult():
     # assert '@adjective' not in c.insult()
 
 
+def test_word_options():
+    """TODO."""
+    pass
+
+
 def test_load_file():
     """Test static method returns list."""
-    assert type(ChatBot.load_file('/vocab/nouns.txt')) is list
-    assert len(ChatBot.load_file('/vocab/nouns.txt')) > 0
+    assert type(ChatBot.load_file('/vocab/default.noun')) is list
+    assert len(ChatBot.load_file('/vocab/default.noun')) > 0
 
 
 def test_decision_true():

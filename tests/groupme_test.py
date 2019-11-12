@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 15:06:44
+# @Last Modified time: 2019-11-12 17:51:48
 
 import os
 import pytest
@@ -86,20 +86,20 @@ def test_random_phrase():
 
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
-def test_insult():
+def test_mad_lib():
     """Test func returns correct string."""
     g = GroupMeChatBot(TEST_DATA)
 
-    assert type(g.insult()) == str
-    assert '@tag_member' not in g.insult()
-    assert '@noun' not in g.insult()
-    assert '@adjective' not in g.insult()
+    assert type(g.mad_lib()) == str
+    assert '@tag_member' not in g.mad_lib()
+    assert '@noun' not in g.mad_lib()
+    assert '@adjective' not in g.mad_lib()
 
 
 def test_load_file():
     """Test static method returns list."""
-    assert type(GroupMeChatBot.load_file('/vocab/nouns.txt')) is list
-    assert len(GroupMeChatBot.load_file('/vocab/nouns.txt')) > 0
+    assert type(GroupMeChatBot.load_file('/vocab/default.noun')) is list
+    assert len(GroupMeChatBot.load_file('/vocab/default.noun')) > 0
 
 
 def test_decision_true():
