@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 21:10:45
+# @Last Modified time: 2019-11-11 21:46:31
 
 import json
 import os
@@ -91,11 +91,11 @@ class ChatBot:
     def insult_beta(self):
         """Return a random insult built from vocab."""
         insult = random.choice(self.load_file('/vocab/insults.txt'))
-        insult.replace('@adjective', random.choice(
+        insult = insult.replace('@adjective', random.choice(
             self.load_file('/vocab/adjectives.txt')))
-        insult.replace('@noun', random.choice(
+        insult = insult.replace('@noun', random.choice(
             self.load_file('/vocab/nouns.txt')))
-        insult.replace('@tag_member', random.choice(self.tag_member()))
+        insult = insult.replace('@tag_member', self.tag_member())
         return insult
 
     @staticmethod
