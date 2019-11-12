@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:50:53
+# @Last Modified time: 2019-11-12 17:53:26
 
 from src.chatbot import ChatBot
 
@@ -51,13 +51,6 @@ def test_introduce():
 
     assert type(c.introduce()) == str
     assert c.introduce() == "Hello, my name is {}".format(c.name)
-
-
-def test_random_phrase():
-    """Test func returns a string."""
-    c = ChatBot()
-
-    assert type(c.random_phrase()) == str
 
 
 def test_mad_lib():

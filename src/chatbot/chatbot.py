@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:47:40
+# @Last Modified time: 2019-11-12 17:53:02
 
 import json
 import os
@@ -68,10 +68,6 @@ class ChatBot:
     def introduce(self):
         """Introduce."""
         return "Hello, my name is {}".format(self.name)
-
-    def random_phrase(self):
-        """Return a random phrase from vocab."""
-        return random.choice(self.load_file('/vocab/phrases.txt'))
 
     def mad_lib(self):
         """Return a random mad lib built from vocab."""

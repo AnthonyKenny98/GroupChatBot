@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:51:48
+# @Last Modified time: 2019-11-12 17:53:33
 
 import os
 import pytest
@@ -75,14 +75,6 @@ def test_introduce():
 
     assert type(g.introduce()) == str
     assert g.introduce() == "Hello, my name is {}".format(g.name)
-
-
-@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
-def test_random_phrase():
-    """Test func returns a string."""
-    g = GroupMeChatBot(TEST_DATA)
-
-    assert type(g.random_phrase()) == str
 
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
