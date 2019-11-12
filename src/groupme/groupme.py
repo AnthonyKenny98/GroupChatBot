@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 19:41:58
+# @Last Modified time: 2019-11-11 19:43:09
 
 import os
 import requests
@@ -161,4 +161,5 @@ def setup_bot(callback_url):
     url = groupme.build_url('bots')
 
     # Make Post request
-    response = requests.pofponse.status_code == 201 else 'Failure')
+    response = requests.post(url, headers=groupme.headers, data=payload)
+    print('Success' if response.status_code == 201 else 'Failure')
