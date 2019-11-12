@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 19:43:09
+# @Last Modified time: 2019-11-11 19:52:00
 
 import os
 import requests
@@ -131,12 +131,6 @@ class GroupMeBot:
 def setup_bot(callback_url):
     """Set Up Bot in a particular GroupMe group chat. Return Bot ID."""
     access_token = input("Please input your GroupMe Account Access Token: ")
-
-    # this_path = os.path.dirname(os.path.realpath(__file__))
-    # os.makedirs(this_path + '/secure', exist_ok=True)
-    # with open(this_path + '/secure/access_token.credentials', 'w') as f:
-    #     f.write(access_token)
-    os.environ['GroupMeAccessToken'] = access_token
 
     groupme = GroupMe(access_token)
 

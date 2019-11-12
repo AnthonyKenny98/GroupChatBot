@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 19:00:30
+# @Last Modified time: 2019-11-11 20:03:13
 
 import json
 import os
@@ -57,7 +57,7 @@ class ChatBot:
             return
 
         # Post response
-        self.post_message(self.random_phrase())
+        self.post_message(self.insult())
 
     def introduce(self):
         """Introduce."""
@@ -65,7 +65,19 @@ class ChatBot:
 
     def random_phrase(self):
         """Return a random phrase from vocab."""
+        return random.choice(self.load_file('/vocab/phrases.txt'))
+
+    def insult(self):
+        """Return a random insult built from vocab."""
+        noun = random.choice(self.load_file('/vocab/nouns.txt'))
+        adjective = random.choice(self.load_file('/vocab/adjectives.txt'))
+        preamble = random.choice(self.load_file('/vocab/preambles.txt'))
+        return preamble + ' ' + adjective + ' ' + noun
+
+    @staticmethod
+    def load_file(file):
+        """Load txt file into array and return."""
         path = os.path.dirname(os.path.realpath(__file__))
-        with open(path + '/vocab/phrases.txt', 'r') as f:
-            phrases = f.read().splitlines()
-        return random.choice(phrases)
+        with open(path + file, 'r') as f:
+            list = f.read().splitlines()
+        return list
