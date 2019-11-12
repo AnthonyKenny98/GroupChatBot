@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 21:09:29
+# @Last Modified time: 2019-11-11 21:10:45
 
 import json
 import os
@@ -96,6 +96,7 @@ class ChatBot:
         insult.replace('@noun', random.choice(
             self.load_file('/vocab/nouns.txt')))
         insult.replace('@tag_member', random.choice(self.tag_member()))
+        return insult
 
     @staticmethod
     def load_file(file):
