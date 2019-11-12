@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 20:03:13
+# @Last Modified time: 2019-11-11 20:16:24
 
 import json
 import os
@@ -45,6 +45,10 @@ class ChatBot:
         """
         pass
 
+    def tag_member(self):
+        """Return string that for given API tags groupmember."""
+        pass
+
     def react(self):
         """React to message that awoke the bot."""
         # Conduct API specific pre-react checks
@@ -72,7 +76,8 @@ class ChatBot:
         noun = random.choice(self.load_file('/vocab/nouns.txt'))
         adjective = random.choice(self.load_file('/vocab/adjectives.txt'))
         preamble = random.choice(self.load_file('/vocab/preambles.txt'))
-        return preamble + ' ' + adjective + ' ' + noun
+        return self.tag_member() + ' ' + preamble + ' ' + adjective \
+            + ' ' + noun
 
     @staticmethod
     def load_file(file):

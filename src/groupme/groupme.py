@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 19:52:00
+# @Last Modified time: 2019-11-11 20:15:45
 
 import os
 import requests
@@ -71,6 +71,10 @@ class GroupMeChatBot(ChatBot):
     def api_pre_react_checks(self):
         """Go through API specific pre-react checks."""
         return self.stimulus['data']['sender_type'] != 'bot'
+
+    def tag_member(self):
+        """Return string that for given API tags groupmember."""
+        return "@" + self.stimulus["message"].sender
 
 
 class GroupMe:
