@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 20:51:35
+# @Last Modified time: 2019-11-11 21:06:21
 
 import json
 import os
@@ -64,7 +64,7 @@ class ChatBot:
                 return
 
         # Post response
-        self.post_message(self.insult())
+        self.post_message(self.insult_beta())
 
     def introduce(self):
         """Introduce."""
@@ -74,7 +74,7 @@ class ChatBot:
         """Return a random phrase from vocab."""
         return random.choice(self.load_file('/vocab/phrases.txt'))
 
-    def insult(self, tag_member=True):
+    def insult(self):
         """Return a random insult built from vocab."""
         message = ""
         if self.decision_true():
@@ -87,6 +87,15 @@ class ChatBot:
                 + ' '
         message += random.choice(self.load_file('/vocab/nouns.txt'))
         return message
+
+    def insult_beta(self):
+        """Return a random insult built from vocab."""
+        insult = random.choice(self.load_file('/vocab/insults.txt'))
+        insult.replace('@adjective', random.choice(
+            self.load_file('/vocab/adjectives.txt')))
+        insult.replace('@noun', random.choice(
+            self.load_file('/vocab/noun.txt')))
+        insult.replace('@tag_member', random.choice(self.tag_member()))
 
     @staticmethod
     def load_file(file):
