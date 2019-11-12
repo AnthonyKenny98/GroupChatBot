@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 15:05:02
+# @Last Modified time: 2019-11-12 15:06:44
 
 import os
 import pytest
@@ -27,7 +27,7 @@ TEST_DATA = {
 }
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_init():
     """Test Initialization of ChatBot."""
     g = GroupMeChatBot(TEST_DATA)
@@ -38,13 +38,13 @@ def test_init():
     assert g.bravery >= 0
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_post_message():
     """TODO."""
     pass
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_api_pre_react_checks():
     """Test is void."""
     g = GroupMeChatBot(TEST_DATA)
@@ -52,7 +52,7 @@ def test_api_pre_react_checks():
     assert type(g.api_pre_react_checks()) is bool
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_tag_member():
     """Test is void."""
     g = GroupMeChatBot(TEST_DATA)
@@ -61,13 +61,13 @@ def test_tag_member():
     assert g.tag_member()[0] == '@'
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_react():
     """TODO."""
     pass
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_introduce():
     """Test func returns correct string."""
     g = GroupMeChatBot(TEST_DATA)
@@ -77,7 +77,7 @@ def test_introduce():
     assert g.introduce() == "Hello, my name is {}".format(g.name)
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_random_phrase():
     """Test func returns a string."""
     g = GroupMeChatBot(TEST_DATA)
@@ -85,7 +85,7 @@ def test_random_phrase():
     assert type(g.random_phrase()) == str
 
 
-@pytest.mark.skipif('TRAVIS' in os.environ)
+@pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_insult():
     """Test func returns correct string."""
     g = GroupMeChatBot(TEST_DATA)
