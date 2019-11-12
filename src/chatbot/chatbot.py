@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 20:37:43
+# @Last Modified time: 2019-11-11 20:44:25
 
 import json
 import os
@@ -82,8 +82,7 @@ class ChatBot:
         if self.decision_true():
             message += random.choice(self.load_file('/vocab/adjectives.txt')) \
                 + ' '
-        if self.decision_true():
-            message += random.choice(self.load_file('/vocab/nouns.txt'))
+        message += random.choice(self.load_file('/vocab/nouns.txt'))
         return message
 
     @staticmethod
