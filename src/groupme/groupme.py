@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 19:39:13
+# @Last Modified time: 2019-11-11 19:41:58
 
 import os
 import requests
@@ -40,7 +40,7 @@ class GroupMeChatBot(ChatBot):
     def __init__(self, data):
         """Initialize GroupMe Chat Bot Instance."""
         # Init GroupMeUser instance
-        self.user = GroupMe(self.get_credentials()['access_token'])
+        self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
 
         # Init GroupMeBot instance
         bots = [b for b in self.user.get_bots()
@@ -161,5 +161,4 @@ def setup_bot(callback_url):
     url = groupme.build_url('bots')
 
     # Make Post request
-    response = requests.post(url, headers=groupme.headers, data=payload)
-    print('Success' if response.status_code == 201 else 'Failure')
+    response = requests.pofponse.status_code == 201 else 'Failure')
