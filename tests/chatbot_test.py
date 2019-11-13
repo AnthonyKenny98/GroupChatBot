@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:40:53
+# @Last Modified time: 2019-11-13 15:00:35
 
 from src.chatbot import ChatBot
 
@@ -66,7 +66,9 @@ def test_mad_lib():
 
 
 def test_spongebob_mock():
-    """TODO."""
+    """Test returns string with every second letter capitalized."""
+    assert ChatBot.spongebob_mock("this is a test message") \
+        == "tHiS iS a TeSt MeSsAgE"
 
 
 def test_word_options():
@@ -76,8 +78,8 @@ def test_word_options():
 
 def test_load_file():
     """Test static method returns list."""
-    assert type(ChatBot.load_file('/vocab/default.noun')) is list
-    assert len(ChatBot.load_file('/vocab/default.noun')) > 0
+    assert type(ChatBot.load_file('/vocab/noun.txt')) is list
+    assert len(ChatBot.load_file('/vocab/noun.txt')) > 0
 
 
 def test_decision_true():

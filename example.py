@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 14:53:27
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:39:20
+# @Last Modified time: 2019-11-13 14:57:01
 
 from src.groupme import GroupMeChatBot
 
@@ -24,4 +24,4 @@ data = {
     'user_id': '41327836'
 }
 
-print(GroupMeChatBot(data).spongebob_mock())
+print(GroupMeChatBot(data).mad_lib())

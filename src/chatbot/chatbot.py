@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:39:33
+# @Last Modified time: 2019-11-13 14:58:23
 
 import json
 import os
@@ -27,6 +27,9 @@ class ChatBot:
 
         # Load Settings
         self.bravery = float(settings['bravery'])
+
+        # Load Vocabulary
+        self.vocab = settings['vocab_path']
 
     def post_message(self):
         """Send Message as Bot.
@@ -63,7 +66,7 @@ class ChatBot:
                 return
 
         # Post response
-        self.post_message(self.spongebob_mock())
+        self.post_message(self.spongebob_mock(self.stimulus['message'].text))
 
     def introduce(self):
         """Introduce."""
@@ -71,23 +74,12 @@ class ChatBot:
 
     def mad_lib(self):
         """Return a random mad lib built from vocab."""
-        sentence = random.choice(self.load_file('/vocab/default.sentence'))
+        sentence = random.choice(
+            self.load_file('/' + self.vocab + '/sentence.txt'))
         placeholders = re.findall(r'@\w+', sentence)
         for placeholder in placeholders:
             sentence = sentence.replace(placeholder, self.word(placeholder), 1)
         return sentence
-
-    def spongebob_mock(self):
-        """Return spongebob mock version of message.
-
-        Credit: https://stackoverflow.com/a/17865821
-        """
-        cap = [True]
-
-        def repl(m):
-            cap[0] = not cap[0]
-            return m.group(0).upper() if cap[0] else m.group(0).lower()
-        return re.sub(r'[A-Za-z]', repl, self.stimulus["message"].text)
 
     def word(self, word_type):
         """Return list of options for a given word_type."""
@@ -95,7 +87,7 @@ class ChatBot:
             return self.tag_member()
         else:
             return random.choice(
-                self.load_file('/vocab/default.' + word_type[1:]))
+                self.load_file('/{}/{}.txt'.format(self.vocab, word_type[1:])))
 
     @staticmethod
     def load_file(file):
@@ -109,3 +101,17 @@ class ChatBot:
     def decision_true(probability=0.5):
         """Return True with given probability."""
         return random.random() < probability
+
+    @staticmethod
+    def spongebob_mock(string):
+        """Return spongebob mock version of message.
+
+        Capitalize every second letter.
+        Credit: https://stackoverflow.com/a/17865821
+        """
+        cap = [True]
+
+        def repl(m):
+            cap[0] = not cap[0]
+            return m.group(0).upper() if cap[0] else m.group(0).lower()
+        return re.sub(r'[A-Za-z]', repl, string)
