@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:58:23
+# @Last Modified time: 2019-11-13 15:13:55
 
 import json
 import os
@@ -24,6 +24,9 @@ class ChatBot:
         path = os.path.dirname(os.path.realpath(__file__))
         with open(path + '/config/default.config', 'r') as f:
             settings = json.load(f)
+
+        # Empty stimulus
+        self.stimulus = None
 
         # Load Settings
         self.bravery = float(settings['bravery'])
@@ -68,6 +71,14 @@ class ChatBot:
         # Post response
         self.post_message(self.spongebob_mock(self.stimulus['message'].text))
 
+    def choose_function(self):
+        """Choose a function from a list according to a certain PDF."""
+        pos = {
+            self.mad_lib: 5,
+            self.spongebob_mock: 1
+        }
+        return random.choice([x for x in pos for y in range(pos[x])])
+
     def introduce(self):
         """Introduce."""
         return "Hello, my name is {}".format(self.name)
@@ -80,6 +91,19 @@ class ChatBot:
         for placeholder in placeholders:
             sentence = sentence.replace(placeholder, self.word(placeholder), 1)
         return sentence
+
+    def spongebob_mock(self):
+        """Return spongebob mock version of message.
+
+        Capitalize every second letter.
+        Credit: https://stackoverflow.com/a/17865821
+        """
+        cap = [True]
+
+        def repl(m):
+            cap[0] = not cap[0]
+            return m.group(0).upper() if cap[0] else m.group(0).lower()
+        return re.sub(r'[A-Za-z]', repl, self.stimulus["message"].text)
 
     def word(self, word_type):
         """Return list of options for a given word_type."""
@@ -101,17 +125,3 @@ class ChatBot:
     def decision_true(probability=0.5):
         """Return True with given probability."""
         return random.random() < probability
-
-    @staticmethod
-    def spongebob_mock(string):
-        """Return spongebob mock version of message.
-
-        Capitalize every second letter.
-        Credit: https://stackoverflow.com/a/17865821
-        """
-        cap = [True]
-
-        def repl(m):
-            cap[0] = not cap[0]
-            return m.group(0).upper() if cap[0] else m.group(0).lower()
-        return re.sub(r'[A-Za-z]', repl, string)

@@ -3,9 +3,10 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 15:00:35
+# @Last Modified time: 2019-11-13 15:15:03
 
 from src.chatbot import ChatBot
+from src.message import Message
 
 
 def test_init():
@@ -67,7 +68,12 @@ def test_mad_lib():
 
 def test_spongebob_mock():
     """Test returns string with every second letter capitalized."""
-    assert ChatBot.spongebob_mock("this is a test message") \
+    c = ChatBot()
+    c.stimulus = {
+        "message": Message()
+    }
+    c.stimulus["message"].text = "this is a test message"
+    assert c.spongebob_mock() \
         == "tHiS iS a TeSt MeSsAgE"
 
 

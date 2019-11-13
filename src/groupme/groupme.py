@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:28:46
+# @Last Modified time: 2019-11-13 15:13:02
 
 import os
 import requests
@@ -39,6 +39,8 @@ class GroupMeChatBot(ChatBot):
 
     def __init__(self, data):
         """Initialize GroupMe Chat Bot Instance."""
+        super().__init__()
+
         # Init GroupMeUser instance
         self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
 
@@ -56,9 +58,6 @@ class GroupMeChatBot(ChatBot):
             'data': data,
             'message': Message(text=data['text'], sender=data['name'])
         })
-
-        # Call super init()
-        super().__init__()
 
     def post_message(self, text):
         """Post message."""
