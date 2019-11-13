@@ -3,9 +3,10 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 14:53:27
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:28:55
+# @Last Modified time: 2019-11-13 14:39:20
 
 from src.groupme import GroupMeChatBot
+
 
 data = {
     'attachments': [],
@@ -19,8 +20,8 @@ data = {
     'sender_type': 'user',
     'source_guid': '5719AB7F-D7C2-4523-B665-14D6DCE91DE6',
     'system': False,
-    'text': '\\show_data',
+    'text': '"This is a test message"',
     'user_id': '41327836'
 }
 
-GroupMeChatBot(data).mad_lib()
+print(GroupMeChatBot(data).spongebob_mock())

@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 14:27:27
+# @Last Modified time: 2019-11-13 14:39:33
 
 import json
 import os
@@ -63,7 +63,7 @@ class ChatBot:
                 return
 
         # Post response
-        self.post_message(self.mad_lib())
+        self.post_message(self.spongebob_mock())
 
     def introduce(self):
         """Introduce."""
@@ -76,6 +76,18 @@ class ChatBot:
         for placeholder in placeholders:
             sentence = sentence.replace(placeholder, self.word(placeholder), 1)
         return sentence
+
+    def spongebob_mock(self):
+        """Return spongebob mock version of message.
+
+        Credit: https://stackoverflow.com/a/17865821
+        """
+        cap = [True]
+
+        def repl(m):
+            cap[0] = not cap[0]
+            return m.group(0).upper() if cap[0] else m.group(0).lower()
+        return re.sub(r'[A-Za-z]', repl, self.stimulus["message"].text)
 
     def word(self, word_type):
         """Return list of options for a given word_type."""

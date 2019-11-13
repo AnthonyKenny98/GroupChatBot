@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:53:26
+# @Last Modified time: 2019-11-13 14:40:53
 
 from src.chatbot import ChatBot
 
@@ -63,6 +63,10 @@ def test_mad_lib():
     # assert '@tag_member' not in c.insult()
     # assert '@noun' not in c.insult()
     # assert '@adjective' not in c.insult()
+
+
+def test_spongebob_mock():
+    """TODO."""
 
 
 def test_word_options():
