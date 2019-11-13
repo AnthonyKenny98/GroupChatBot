@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 14:53:27
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:38:40
+# @Last Modified time: 2019-11-13 14:28:55
 
 from src.groupme import GroupMeChatBot
 
@@ -23,4 +23,4 @@ data = {
     'user_id': '41327836'
 }
 
-print(GroupMeChatBot(data).mad_lib())
+GroupMeChatBot(data).mad_lib()

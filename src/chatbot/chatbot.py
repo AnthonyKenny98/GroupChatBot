@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:53:02
+# @Last Modified time: 2019-11-13 14:27:27
 
 import json
 import os
@@ -74,7 +74,7 @@ class ChatBot:
         sentence = random.choice(self.load_file('/vocab/default.sentence'))
         placeholders = re.findall(r'@\w+', sentence)
         for placeholder in placeholders:
-            sentence = sentence.replace(placeholder, self.word(placeholder))
+            sentence = sentence.replace(placeholder, self.word(placeholder), 1)
         return sentence
 
     def word(self, word_type):

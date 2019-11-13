@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-12 17:53:33
+# @Last Modified time: 2019-11-13 14:30:31
 
 import os
 import pytest
@@ -41,6 +41,8 @@ def test_init():
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_post_message():
     """TODO."""
+    # g = GroupMeChatBot(TEST_DATA)
+    # assert type(g.post_message("")) is not None
     pass
 
 
