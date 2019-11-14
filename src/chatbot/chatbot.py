@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 14:57:15
+# @Last Modified time: 2019-11-14 15:04:29
 
 import json
 import os
@@ -142,6 +142,8 @@ class ChatBot:
     @staticmethod
     def get_meme():
         """Return Binary Image Data of a Meme."""
+        # s = 'me_irl'
+        s = 'cursedImages'
         meme_url = requests.get(
-            "https://meme-api.herokuapp.com/gimme/me_irl").json()['url']
+            "https://meme-api.herokuapp.com/gimme/{}".format(s)).json()['url']
         return requests.get(meme_url).content
