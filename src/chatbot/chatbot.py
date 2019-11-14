@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 15:13:55
+# @Last Modified time: 2019-11-14 10:26:55
 
 import json
 import os
@@ -69,7 +69,7 @@ class ChatBot:
                 return
 
         # Post response
-        self.post_message(self.spongebob_mock(self.stimulus['message'].text))
+        self.post_message(self.choose_function()())
 
     def choose_function(self):
         """Choose a function from a list according to a certain PDF."""
