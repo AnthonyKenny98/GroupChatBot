@@ -4,12 +4,13 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 10:26:55
+# @Last Modified time: 2019-11-14 14:57:15
 
 import json
 import os
 import random
 import re
+import requests
 
 
 class ChatBot:
@@ -75,7 +76,8 @@ class ChatBot:
         """Choose a function from a list according to a certain PDF."""
         pos = {
             self.mad_lib: 5,
-            self.spongebob_mock: 1
+            self.spongebob_mock: 1,
+            self.post_meme: 4
         }
         return random.choice([x for x in pos for y in range(pos[x])])
 
@@ -105,6 +107,17 @@ class ChatBot:
             return m.group(0).upper() if cap[0] else m.group(0).lower()
         return re.sub(r'[A-Za-z]', repl, self.stimulus["message"].text)
 
+    def post_meme(self):
+        """Post Meme to Group Chat.
+
+        TODO- clean this up, wrong scope, text should be optional
+        """
+        attachments = [{
+            'type': 'image',
+            'url': self.user.upload_photo(self.get_meme())
+        }]
+        self.post_message('', attachments=attachments)
+
     def word(self, word_type):
         """Return list of options for a given word_type."""
         if word_type == '@tag_member':
@@ -125,3 +138,10 @@ class ChatBot:
     def decision_true(probability=0.5):
         """Return True with given probability."""
         return random.random() < probability
+
+    @staticmethod
+    def get_meme():
+        """Return Binary Image Data of a Meme."""
+        meme_url = requests.get(
+            "https://meme-api.herokuapp.com/gimme/me_irl").json()['url']
+        return requests.get(meme_url).content

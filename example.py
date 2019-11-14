@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 14:53:27
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 16:09:19
+# @Last Modified time: 2019-11-14 14:50:27
 
 from src.groupme import GroupMeChatBot
 
@@ -24,4 +24,5 @@ data = {
     'user_id': '41327836'
 }
 
-# print(GroupMeChatBot(data).post_message(""))
+img_data = GroupMeChatBot.get_meme()
+print(GroupMeChatBot(data).post_meme())

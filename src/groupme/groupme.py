@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 15:13:02
+# @Last Modified time: 2019-11-14 14:53:24
 
 import os
 import requests
@@ -59,10 +59,10 @@ class GroupMeChatBot(ChatBot):
             'message': Message(text=data['text'], sender=data['name'])
         })
 
-    def post_message(self, text):
+    def post_message(self, text, attachments=[]):
         """Post message."""
         # UNCOMMENT FOR PRODUCTION
-        return self.bot.post_message(text)
+        return self.bot.post_message(text, attachments)
 
         # PRINT FOR TESTING
         # print(text)
@@ -81,6 +81,7 @@ class GroupMe:
 
     def __init__(self, access_token):
         """Initialize GroupMe Class Instance."""
+        self.access_token = access_token
         self.authString = '?token=' + access_token
         self.baseURL = 'https://api.groupme.com/v3'
         self.headers = {'content-type': 'application/json'}
@@ -102,6 +103,20 @@ class GroupMe:
         """Return list of bots."""
         return requests.get(self.build_url('bots')).json()['response']
 
+    def upload_photo(self, img_data):
+        """Post photo to GroupMe Image Service.
+
+        Takes binary image data as input
+
+        Return url for img
+        """
+        return requests.post(
+            'https://image.groupme.com/pictures',
+            headers={
+                'X-Access-Token': self.access_token
+            },
+            data=img_data).json()['payload']['url']
+
 
 class GroupMeBot:
     """Interface for GroupMe Bot."""
@@ -119,14 +134,15 @@ class GroupMeBot:
         }
         return self.baseURL + url_path[endpoint]
 
-    def post_message(self, text):
+    def post_message(self, text, attachments):
         """Send message as bot."""
         return requests.post(
             self.build_url('post'),
             headers=self.headers,
             data=json.dumps({
                 "bot_id": self.id,
-                "text": text
+                "text": text,
+                'attachments': attachments
             })
         )
 
