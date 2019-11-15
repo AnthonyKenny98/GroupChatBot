@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 15:30:36
+# @Last Modified time: 2019-11-15 16:29:09
 
 import json
 import os
@@ -106,7 +106,8 @@ class ChatBot:
             self.mad_lib: int(pdf['mad_lib']),
             self.spongebob_mock: int(pdf['spongebob_mock']),
             self.post_meme: int(pdf['post_meme']),
-            self.cross_map: int(pdf['cross_map'])
+            self.cross_map: int(pdf['cross_map']),
+            self.create_meme: int(pdf['create_meme'])
         }
         return random.choice([x for x in funcs for y in range(funcs[x])])
 
@@ -176,6 +177,23 @@ class ChatBot:
             type='image',
             url=self.user.upload_photo(
                 self.get_meme(self.settings['subreddits']))
+        )]
+        message = Message(attachments=attachments)
+        return message
+
+    def create_meme(self):
+        """Create Meme."""
+        member = random.choice(self.get_members())['name'].replace(' ', '_')
+        url = 'https://memegen.link/'
+        formats = random.choice(list(requests.get(
+            url + '/api/templates').json().values()))
+        meme_format = formats.rpartition('/')[2]
+        img_data = requests.get(
+            url + meme_format + '/{}/{}.jpeg'.format(member, member)).content
+        attachments = [Attachment(
+            type='image',
+            url=self.user.upload_photo(
+                img_data)
         )]
         message = Message(attachments=attachments)
         return message

@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 15:19:11
+# @Last Modified time: 2019-11-15 15:52:00
 
 import os
 import requests
@@ -78,6 +78,10 @@ class GroupMeChatBot(ChatBot):
         return "@" + self.stimulus.sender if reply else \
             "@" + random.choice(self.user.get_members())['name']
 
+    def get_members(self, name=None):
+        """Get list of members."""
+        return self.user.get_members(name)
+
     @staticmethod
     def get_credentials():
         """Return dict of credentials from either secure or example folder.
@@ -133,7 +137,7 @@ class GroupMe:
         members = requests.get(
             self.build_url('members')).json()['response']['members']
         return members if name is None else \
-            next((m for m in members if m['name'] == name), members)
+            [next((m for m in members if m['name'] == name), members)]
 
     def upload_photo(self, img_data):
         """Post photo to GroupMe Image Service.
