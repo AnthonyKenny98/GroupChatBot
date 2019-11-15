@@ -5,16 +5,26 @@
 
 Currently supports:
   - GroupMe
+  
+## Table of Contents
 
-## Prerequisites
-Heroku CLI installed
++ [Prerequisites](#prereq)
++ [Installation/Setup](#setup): Instructions for setting up your own chatbot.
++ [API Reference](#api)
++ [Licensing](#license)
 
-## Api Reference
+
+## <a name="prereq"></a>Prerequisites
++ Heroku CLI: to setup a server for hosting your bots. Install [Here](https://devcenter.heroku.com/articles/heroku-cli)
+
+## <a name="setup"></a>Installation/Setup
+
+## <a name="api"></a>Api Reference
 
 [GroupMe API](https://dev.groupme.com/).
 
 [Meme API](https://github.com/R3l3ntl3ss/Meme_Api)
 
-## Licensing
+## <a name="license"></a>Licensing
 
 This project is licensed under the MIT License.  See the [LICENSE](LICENSE) file for more information.
