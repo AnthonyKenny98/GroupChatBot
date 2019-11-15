@@ -22,7 +22,8 @@ Currently supports:
 ## <a name="setup"></a>Installation/Setup
 
 Checkout the Code
-  $ git clone 
+  $ git clone https://github.com/AnthonyKenny98/GroupChatBot.git
+  $ cd GroupChatBot
 
 ## <a name="api"></a>Api Reference
 
