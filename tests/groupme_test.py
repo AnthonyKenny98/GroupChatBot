@@ -3,12 +3,13 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 15:00:30
+# @Last Modified time: 2019-11-15 09:27:03
 
 import os
 import pytest
 
 from src.groupme import GroupMeChatBot
+from src.message import Message
 
 TEST_DATA = {
     'attachments': [],
@@ -37,26 +38,30 @@ def test_init():
     assert g.bravery <= 1
     assert g.bravery >= 0
 
+    # self.stimulus
+    assert g.stimulus is not None
+
+    # self.vocab
+    assert g.vocab is not None
+
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_post_message():
     """TODO."""
-    # g = GroupMeChatBot(TEST_DATA)
-    # assert type(g.post_message("")) is not None
     pass
 
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
-def test_api_pre_react_checks():
-    """Test is void."""
+def test_pre_react_checks():
+    """Test is bool."""
     g = GroupMeChatBot(TEST_DATA)
 
-    assert type(g.api_pre_react_checks()) is bool
+    assert type(g.pre_react_checks()) is bool
 
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
 def test_tag_member():
-    """Test is void."""
+    """Test tags member correctly."""
     g = GroupMeChatBot(TEST_DATA)
 
     assert type(g.tag_member()) is str
@@ -75,8 +80,8 @@ def test_introduce():
     g = GroupMeChatBot(TEST_DATA)
     g.name = "Test"
 
-    assert type(g.introduce()) == str
-    assert g.introduce() == "Hello, my name is {}".format(g.name)
+    assert type(g.introduce()) == Message
+    assert g.introduce().text == "Hello, my name is {}".format(g.name)
 
 
 @pytest.mark.skipif('TRAVIS' in os.environ, reason='No GroupMe Access Token')
@@ -84,10 +89,10 @@ def test_mad_lib():
     """Test func returns correct string."""
     g = GroupMeChatBot(TEST_DATA)
 
-    assert type(g.mad_lib()) == str
-    assert '@tag_member' not in g.mad_lib()
-    assert '@noun' not in g.mad_lib()
-    assert '@adjective' not in g.mad_lib()
+    assert type(g.mad_lib()) == Message
+    assert '@tag_member' not in g.mad_lib().text
+    assert '@noun' not in g.mad_lib().text
+    assert '@adjective' not in g.mad_lib().text
 
 
 def test_load_file():

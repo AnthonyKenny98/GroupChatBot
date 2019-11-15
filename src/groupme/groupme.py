@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 19:00:48
+# @Last Modified time: 2019-11-15 09:23:15
 
 import os
 import requests
@@ -15,10 +15,20 @@ CREDENTIALS = ['GroupMeAccessToken']
 
 
 class GroupMeChatBot(ChatBot):
-    """Master ChatBot Class for GroupMe."""
+    """Provide ChatBot Class for GroupMe.
+
+    Inherits ChatBot class as parent class
+    """
 
     def __init__(self, data):
-        """Initialize GroupMe Chat Bot Instance."""
+        """Initialize GroupMe Chat Bot Instance.
+
+        Input:
+            -data: data posted to bot from GroupMe Webhook
+        Return:
+            None
+        """
+        # Init Parent Class
         super().__init__()
 
         # Init GroupMeUser instance
@@ -36,7 +46,13 @@ class GroupMeChatBot(ChatBot):
         self.stimulus = Message(text=data['text'], sender=data['name'])
 
     def post_message(self, message):
-        """Post message."""
+        """Post message.
+
+        Input:
+            - message: Message instance
+        Return
+            - response: from self.bot.post_message
+        """
         # UNCOMMENT FOR PRODUCTION
         return self.bot.post_message(
             text=message.text,
@@ -45,8 +61,14 @@ class GroupMeChatBot(ChatBot):
         # PRINT FOR TESTING
         # print(text)
 
-    def api_pre_react_checks(self):
-        """Go through API specific pre-react checks."""
+    def pre_react_checks(self):
+        """Go through API specific pre-react checks.
+
+        Input:
+            None
+        Return:
+            - Bool: True if proceed, False if stop
+        """
         return self.stimulus.sender != self.name
 
     def tag_member(self):

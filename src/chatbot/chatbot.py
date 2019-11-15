@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 19:01:05
+# @Last Modified time: 2019-11-15 09:18:48
 
 import json
 import os
@@ -52,7 +52,7 @@ class ChatBot:
         """
         pass
 
-    def api_pre_react_checks(self):
+    def pre_react_checks(self):
         """Check before going through react logic.
 
         Void method in Parent Class.
@@ -66,7 +66,7 @@ class ChatBot:
         Void method in Parent Class.
         Implemented in Children Classes for specific APIs
         """
-        pass
+        return ""
 
     def react(self):
         """React to message that awoke the bot.
@@ -79,7 +79,7 @@ class ChatBot:
         # Execute Logic to decide whether to react
 
         #   1) Conduct API specific pre-react checks
-        if not self.api_pre_react_checks():
+        if not self.pre_react_checks():
             return
 
         #   2) Always reply if called out
@@ -114,7 +114,7 @@ class ChatBot:
         Input:
             None
         Return:
-            String: Introduction
+            Message: Introduction
         """
         return Message(
             text='Hello, my name is {}'.format(self.name))
@@ -125,7 +125,7 @@ class ChatBot:
         Input:
             None
         Return
-            String: Completed Mad Lib String
+            Message: With completed Mad Lib String
         """
         def word(word_type):
             """Return list of options for a given word_type."""
@@ -148,7 +148,7 @@ class ChatBot:
         Input:
             None
         Return:
-            String: Alternating capitalized version of self.stimulus.text
+            Message: With alternating capitalized version of self.stimulus.text
         """
         cap = [True]
 
