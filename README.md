@@ -1,9 +1,9 @@
 <img src="img/mrchatterbox.png" alt="project logo image" width="100"/>
 
 # Group Chat Bot &middot; [![Known Vulnerabilities](https://snyk.io/test/github/AnthonyKenny98/GroupChatBot/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AnthonyKenny98/GroupChatBot?targetFile=requirements.txt) [![Build Status](https://travis-ci.org/AnthonyKenny98/GroupChatBot.svg?branch=master)](https://travis-ci.org/AnthonyKenny98/GroupChatBot) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/AnthonyKenny98/Vend_Inventory_Upload/blob/master/LICENSE)
-> Anthony Kenny.
+> Fun ChatBot to be inserted into group chats.
 
-Currently supports:
+This ChatBot can currently support the following:
   - GroupMe
   
 ## Table of Contents
@@ -18,6 +18,8 @@ Currently supports:
 + [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli): to setup a server for hosting your bots.
 + [Travis Account](https://travis-ci.org/): Optional, for CI if you fork this repo.
 + [Python 3.7.5](https://www.python.org/downloads/release/python-275/)
+
+At least one of:
 + [GroupMe Developer Account](https://dev.groupme.com/): This is the same as your GroupMe Account. Your Access Token can be found here.
 
 ## <a name="setup"></a>Installation/Setup
@@ -51,9 +53,11 @@ Congratulations, you have set up your first bot!
 
 ## <a name="api"></a>Api Reference
 
-[GroupMe API](https://dev.groupme.com/).
+### Group Chat APIs
+[GroupMe API](https://dev.groupme.com/)
 
-[Meme API](https://github.com/R3l3ntl3ss/Meme_Api)
+### Other APIs
+[Meme API](https://github.com/R3l3ntl3ss/Meme_Api): Used to find memes from reddit for bot to post.
 
 ## <a name="license"></a>Licensing
 
