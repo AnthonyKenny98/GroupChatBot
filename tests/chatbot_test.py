@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 09:20:10
+# @Last Modified time: 2019-11-15 15:04:31
 
 from src.chatbot import ChatBot
 from src.message import Message
@@ -90,8 +90,8 @@ def test_spongebob_mock():
 
 def test_load_file():
     """Test static method returns list."""
-    assert type(ChatBot.load_file('/vocab/noun.txt')) is list
-    assert len(ChatBot.load_file('/vocab/noun.txt')) > 0
+    assert type(ChatBot.load_file('/vocab/default/noun.txt')) is list
+    assert len(ChatBot.load_file('/vocab/default/noun.txt')) > 0
 
 
 def test_decision_true():

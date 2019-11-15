@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 11:47:27
+# @Last Modified time: 2019-11-15 15:03:56
 
 import json
 import os
@@ -21,7 +21,7 @@ class ChatBot:
     Is inherited by application specific ChildChatBot classes.
     """
 
-    def __init__(self, config):
+    def __init__(self, config=None):
         """Initialize ChatBot.
 
         Input:

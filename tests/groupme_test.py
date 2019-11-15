@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 09:27:03
+# @Last Modified time: 2019-11-15 15:04:44
 
 import os
 import pytest
@@ -97,8 +97,8 @@ def test_mad_lib():
 
 def test_load_file():
     """Test static method returns list."""
-    assert type(GroupMeChatBot.load_file('/vocab/noun.txt')) is list
-    assert len(GroupMeChatBot.load_file('/vocab/noun.txt')) > 0
+    assert type(GroupMeChatBot.load_file('/vocab/default/noun.txt')) is list
+    assert len(GroupMeChatBot.load_file('/vocab/default/noun.txt')) > 0
 
 
 def test_decision_true():
