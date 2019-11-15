@@ -10,7 +10,9 @@ Heroku CLI installed
 
 ## Api Reference
 
-This project makes heavy use of the [GroupMe API](https://dev.groupme.com/).
+[GroupMe API](https://dev.groupme.com/).
+
+[Meme API](https://github.com/R3l3ntl3ss/Meme_Api)
 
 ## Licensing
 
