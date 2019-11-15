@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 10:01:54
+# @Last Modified time: 2019-11-15 11:38:31
 
 import os
 import requests
@@ -20,7 +20,7 @@ class GroupMeChatBot(ChatBot):
     Inherits ChatBot class as parent class
     """
 
-    def __init__(self, data):
+    def __init__(self, data, config=None):
         """Initialize GroupMe Chat Bot Instance.
 
         Input:
@@ -29,7 +29,7 @@ class GroupMeChatBot(ChatBot):
             None
         """
         # Init Parent Class
-        super().__init__()
+        super().__init__(config)
 
         # Init GroupMeUser instance
         self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
@@ -106,7 +106,7 @@ class GroupMe:
         self.authString = '?token=' + access_token
         self.baseURL = 'https://api.groupme.com/v3'
         self.headers = {'content-type': 'application/json'}
-        self.group_id = None
+        self.group_id = ''
 
     def build_url(self, endpoint, **kwargs):
         """Return URL for given endpoint."""

@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 15:25:47
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-11 23:14:11
+# @Last Modified time: 2019-11-15 11:37:01
 
 from src.groupme import GroupMeChatBot
 from flask import Flask, jsonify, request
@@ -16,10 +16,10 @@ def index():
     return jsonify({"Message": "Response"})
 
 
-@app.route('/groupme/<randomint>', methods=['POST'])
-def call_bot(randomint):
+@app.route('/groupme/<config>', methods=['POST'])
+def call_bot(config):
     """Call Bot."""
-    GroupMeChatBot(request.json).react()
+    GroupMeChatBot(request.json, config=config).react()
     return jsonify({"Message": "Response"})
 
 
