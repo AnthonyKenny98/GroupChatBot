@@ -18,12 +18,36 @@ Currently supports:
 + [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli): to setup a server for hosting your bots.
 + [Travis Account](https://travis-ci.org/): Optional, for CI if you fork this repo.
 + [Python 3.7.5](https://www.python.org/downloads/release/python-275/)
++ [GroupMe Developer Account](https://dev.groupme.com/): This is the same as your GroupMe Account. Your Access Token can be found here.
 
 ## <a name="setup"></a>Installation/Setup
 
-Checkout the Code
+### Checkout the Code 
+  ```
   $ git clone https://github.com/AnthonyKenny98/GroupChatBot.git
   $ cd GroupChatBot
+  ```
+### Create and Init Virtual Environment
+  ```
+  $ virtualenv venv
+  $ source venv/bin/activate
+  ```
+### Install Dependencies
+  ```
+  $ pip3 install -r requirements.txt
+  ```
+### Setup Heroku (You will need your Heroku Account Credentials).
+You will be prompted to enter a Heroku App Name. Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes.
+The script will push the application to the heroku server and install all neccesary dependencies.
+  ```
+  $ ./scripts/heroku_setup.sh
+  ```
+### Setup a Bot
+The following can be repeated for as many bots in as many groupchats as you would like. You will be prompted for your GroupMe Access Token.
+  ```
+  $ ./scripts/bot_setup.sh
+  ```
+Congratulations, you have set up your first bot!
 
 ## <a name="api"></a>Api Reference
 
