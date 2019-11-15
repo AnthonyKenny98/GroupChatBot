@@ -45,7 +45,7 @@ The script will push the application to the heroku server and install all necces
   $ ./scripts/heroku_setup.sh
   ```
 ### Setup a Bot
-The following can be repeated for as many bots in as many groupchats as you would like. You will be prompted for your GroupMe Access Token.
+The following can be repeated for as many bots in as many groupchats as you would like. You will be prompted for your GroupMe Access Token. You will also be prompted to enter the name of your config file. This can be one you define or just enter "default"
   ```
   $ ./scripts/bot_setup.sh
   ```
