@@ -15,9 +15,14 @@ Currently supports:
 
 
 ## <a name="prereq"></a>Prerequisites
-+ Heroku CLI: to setup a server for hosting your bots. Install [Here](https://devcenter.heroku.com/articles/heroku-cli)
++ [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli): to setup a server for hosting your bots.
++ [Travis Account](https://travis-ci.org/): Optional, for CI if you fork this repo.
++ [Python 3.7.5](https://www.python.org/downloads/release/python-275/)
 
 ## <a name="setup"></a>Installation/Setup
+
+Checkout the Code
+  $ git clone 
 
 ## <a name="api"></a>Api Reference
 
