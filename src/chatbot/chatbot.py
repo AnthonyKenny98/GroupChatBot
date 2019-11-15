@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 11:38:17
+# @Last Modified time: 2019-11-15 11:47:27
 
 import json
 import os
@@ -84,7 +84,7 @@ class ChatBot:
             return
 
         #   2) Always reply if called out
-        if self.name not in self.stimulus.text:
+        if self.name.lower() not in self.stimulus.text.lower():
             #   3) With probability inversely proportional to bravery setting,a
             #   don't react
             if self.bravery < random.uniform(0, 1):
