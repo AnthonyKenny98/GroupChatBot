@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 09:18:48
+# @Last Modified time: 2019-11-15 10:18:52
 
 import json
 import os
@@ -77,7 +77,6 @@ class ChatBot:
             Void
         """
         # Execute Logic to decide whether to react
-
         #   1) Conduct API specific pre-react checks
         if not self.pre_react_checks():
             return

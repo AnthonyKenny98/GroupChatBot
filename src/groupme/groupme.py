@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 09:23:15
+# @Last Modified time: 2019-11-15 10:01:54
 
 import os
 import requests
@@ -33,6 +33,7 @@ class GroupMeChatBot(ChatBot):
 
         # Init GroupMeUser instance
         self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
+        self.user.group_id = data['group_id']
 
         # Init GroupMeBot instance
         bots = [b for b in self.user.get_bots()
@@ -105,13 +106,15 @@ class GroupMe:
         self.authString = '?token=' + access_token
         self.baseURL = 'https://api.groupme.com/v3'
         self.headers = {'content-type': 'application/json'}
+        self.group_id = None
 
     def build_url(self, endpoint, **kwargs):
         """Return URL for given endpoint."""
         url_path = {
             'groups': '/groups',
-            'messages': '/groups/' + kwargs.get('groupID', '') + '/messages',
-            'bots': '/bots'
+            'messages': '/groups/' + self.group_id + '/messages',
+            'bots': '/bots',
+            'members': '/groups/' + self.group_id
         }
         return self.baseURL + url_path[endpoint] + self.authString
 
@@ -122,6 +125,13 @@ class GroupMe:
     def get_bots(self):
         """Return list of bots."""
         return requests.get(self.build_url('bots')).json()['response']
+
+    def get_members(self, name=None):
+        """Return a list of members."""
+        members = requests.get(
+            self.build_url('members')).json()['response']['members']
+        return members if name is None else \
+            next((m for m in members if m['name'] == name), members)
 
     def upload_photo(self, img_data):
         """Post photo to GroupMe Image Service.
