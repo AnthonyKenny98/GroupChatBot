@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-13 15:15:03
+# @Last Modified time: 2019-11-14 18:28:20
 
 from src.chatbot import ChatBot
 from src.message import Message
@@ -17,6 +17,12 @@ def test_init():
     assert type(c.bravery) is float
     assert c.bravery <= 1
     assert c.bravery >= 0
+
+    # self.stimulus
+    assert c.stimulus is None
+
+    # self.vocab
+    assert c.vocab is not None
 
 
 def test_post_message():

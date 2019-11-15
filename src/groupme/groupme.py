@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 14:53:24
+# @Last Modified time: 2019-11-14 19:00:48
 
 import os
 import requests
@@ -16,6 +16,42 @@ CREDENTIALS = ['GroupMeAccessToken']
 
 class GroupMeChatBot(ChatBot):
     """Master ChatBot Class for GroupMe."""
+
+    def __init__(self, data):
+        """Initialize GroupMe Chat Bot Instance."""
+        super().__init__()
+
+        # Init GroupMeUser instance
+        self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
+
+        # Init GroupMeBot instance
+        bots = [b for b in self.user.get_bots()
+                if b['group_id'] == data['group_id']]
+        self.bot = GroupMeBot(bots[0]['bot_id'])
+
+        # Init GroupMeChatBot Name
+        self.name = bots[0]['name']
+
+        # Message that awoke the bot
+        self.stimulus = Message(text=data['text'], sender=data['name'])
+
+    def post_message(self, message):
+        """Post message."""
+        # UNCOMMENT FOR PRODUCTION
+        return self.bot.post_message(
+            text=message.text,
+            attachments=message.attachments)
+
+        # PRINT FOR TESTING
+        # print(text)
+
+    def api_pre_react_checks(self):
+        """Go through API specific pre-react checks."""
+        return self.stimulus.sender != self.name
+
+    def tag_member(self):
+        """Return string that for given API tags groupmember."""
+        return "@" + self.stimulus.sender
 
     @staticmethod
     def get_credentials():
@@ -36,44 +72,6 @@ class GroupMeChatBot(ChatBot):
             for credential in CREDENTIALS:
                 credentials[credential] = os.environ[credential]
         return credentials
-
-    def __init__(self, data):
-        """Initialize GroupMe Chat Bot Instance."""
-        super().__init__()
-
-        # Init GroupMeUser instance
-        self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
-
-        # Init GroupMeBot instance
-        bots = [b for b in self.user.get_bots()
-                if b['group_id'] == data['group_id']]
-        self.bot = GroupMeBot(bots[0]['bot_id'])
-
-        # Init GroupMeChatBot Name
-        self.name = bots[0]['name']
-
-        # Message that awoke the bot
-        self.stimulus = {}
-        self.stimulus.update({
-            'data': data,
-            'message': Message(text=data['text'], sender=data['name'])
-        })
-
-    def post_message(self, text, attachments=[]):
-        """Post message."""
-        # UNCOMMENT FOR PRODUCTION
-        return self.bot.post_message(text, attachments)
-
-        # PRINT FOR TESTING
-        # print(text)
-
-    def api_pre_react_checks(self):
-        """Go through API specific pre-react checks."""
-        return self.stimulus['data']['sender_type'] != 'bot'
-
-    def tag_member(self):
-        """Return string that for given API tags groupmember."""
-        return "@" + self.stimulus["message"].sender
 
 
 class GroupMe:
@@ -136,6 +134,7 @@ class GroupMeBot:
 
     def post_message(self, text, attachments):
         """Send message as bot."""
+        attachments = [{'type': a.type, 'url': a.url} for a in attachments]
         return requests.post(
             self.build_url('post'),
             headers=self.headers,

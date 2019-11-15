@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 14:53:27
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-14 14:50:27
+# @Last Modified time: 2019-11-14 18:52:20
 
 from src.groupme import GroupMeChatBot
 
@@ -20,9 +20,8 @@ data = {
     'sender_type': 'user',
     'source_guid': '5719AB7F-D7C2-4523-B665-14D6DCE91DE6',
     'system': False,
-    'text': '"This is a test message"',
+    'text': '"@Mr Bot This is a test message"',
     'user_id': '41327836'
 }
 
-img_data = GroupMeChatBot.get_meme()
-print(GroupMeChatBot(data).post_meme())
+GroupMeChatBot(data).react()
