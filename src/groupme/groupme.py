@@ -3,11 +3,12 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 11:38:31
+# @Last Modified time: 2019-11-15 15:19:11
 
 import os
 import requests
 import json
+import random
 from ..chatbot import ChatBot
 from ..message import Message
 
@@ -72,9 +73,10 @@ class GroupMeChatBot(ChatBot):
         """
         return self.stimulus.sender != self.name
 
-    def tag_member(self):
+    def tag_member(self, reply=False):
         """Return string that for given API tags groupmember."""
-        return "@" + self.stimulus.sender
+        return "@" + self.stimulus.sender if reply else \
+            "@" + random.choice(self.user.get_members())['name']
 
     @staticmethod
     def get_credentials():

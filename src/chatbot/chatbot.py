@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 15:03:56
+# @Last Modified time: 2019-11-15 15:30:36
 
 import json
 import os
@@ -62,7 +62,7 @@ class ChatBot:
         """
         pass
 
-    def tag_member(self):
+    def tag_member(self, reply=False):
         """Return string that, for given API, tags groupmember.
 
         Void method in Parent Class.
@@ -106,6 +106,7 @@ class ChatBot:
             self.mad_lib: int(pdf['mad_lib']),
             self.spongebob_mock: int(pdf['spongebob_mock']),
             self.post_meme: int(pdf['post_meme']),
+            self.cross_map: int(pdf['cross_map'])
         }
         return random.choice([x for x in funcs for y in range(funcs[x])])
 
@@ -120,7 +121,7 @@ class ChatBot:
         return Message(
             text='Hello, my name is {}'.format(self.name))
 
-    def mad_lib(self):
+    def mad_lib(self, reply=True):
         """Return Mad Lib from vocab.
 
         Input:
@@ -130,12 +131,16 @@ class ChatBot:
         """
         def word(word_type):
             """Return list of options for a given word_type."""
-            return self.tag_member() if word_type == '@tag_member' \
+            return self.tag_member(reply=reply) if word_type == '@tag_member' \
                 else random.choice(self.load_file('/{}/{}.txt'.format(
                     self.vocab, word_type[1:])))
 
-        sentence = random.choice(
-            self.load_file('/' + self.vocab + '/sentence.txt'))
+        def pick_sentence():
+            return random.choice(
+                self.load_file('/' + self.vocab + '/sentence.txt'))
+        sentence = pick_sentence()
+        while not reply and '@tag_member' not in sentence:
+            sentence = pick_sentence()
         placeholders = re.findall(r'@\w+', sentence)
         for placeholder in placeholders:
             sentence = sentence.replace(placeholder, word(placeholder), 1)
@@ -174,6 +179,10 @@ class ChatBot:
         )]
         message = Message(attachments=attachments)
         return message
+
+    def cross_map(self):
+        """Mad lib against random user."""
+        return self.mad_lib(reply=False)
 
     @staticmethod
     def load_file(file):
