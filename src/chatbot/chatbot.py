@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 16:01:35
+# @Last Modified time: 2019-11-16 16:25:14
 
 import json
 import os
@@ -72,17 +72,24 @@ class ChatBot:
 
     def choose_function(self):
         """Return a class method according to probability in config file."""
-        selector = {
-            'mad_lib': self.mad_lib,
-            'spongebob_mock': self.spongebob_mock,
-            'post_meme': self.meme,
-            'cross_map': self.cross_map,
-            'create_meme': self.create_meme
-        }
-        funcs = {}
-        for key, val in self.settings['random_function_call_pdf'].items():
-            funcs[selector[key]] = int(val)
-        return random.choice([x for x in funcs for y in range(funcs[x])])
+        # Parse stimulus
+        if 'meme' in self.stimulus.text.lower():
+            options = [self.meme]
+        elif self.name.lower() in self.stimulus.text.lower():
+            options = [self.mad_lib]
+        else:
+            selector = {
+                'mad_lib': self.mad_lib,
+                'spongebob_mock': self.spongebob_mock,
+                'post_meme': self.meme,
+                'cross_map': self.cross_map,
+                'create_meme': self.create_meme
+            }
+            funcs = {}
+            for key, val in self.settings['random_function_call_pdf'].items():
+                funcs[selector[key]] = int(val)
+            options = [x for x in funcs for y in range(funcs[x])]
+        return random.choice(options)
 
     def introduce(self):
         """Return Message Object with introduction."""
