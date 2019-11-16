@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 15:52:00
+# @Last Modified time: 2019-11-15 19:27:49
 
 import os
 import requests
@@ -56,6 +56,9 @@ class GroupMeChatBot(ChatBot):
             - response: from self.bot.post_message
         """
         # UNCOMMENT FOR PRODUCTION
+        for a in message.attachments:
+            if a.type == 'image':
+                a.url = self.user.upload_photo(a.url)
         return self.bot.post_message(
             text=message.text,
             attachments=message.attachments)
@@ -139,10 +142,10 @@ class GroupMe:
         return members if name is None else \
             [next((m for m in members if m['name'] == name), members)]
 
-    def upload_photo(self, img_data):
+    def upload_photo(self, img_url):
         """Post photo to GroupMe Image Service.
 
-        Takes binary image data as input
+        Takes url of image as input
 
         Return url for img
         """
@@ -151,7 +154,7 @@ class GroupMe:
             headers={
                 'X-Access-Token': self.access_token
             },
-            data=img_data).json()['payload']['url']
+            data=img_url.content).json()['payload']['url']
 
 
 class GroupMeBot:

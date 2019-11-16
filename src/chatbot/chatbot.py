@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 16:29:09
+# @Last Modified time: 2019-11-16 14:25:29
 
 import json
 import os
@@ -32,42 +32,32 @@ class ChatBot:
         if config is None:
             config = 'default'
         # Import config settings
-        path = os.path.dirname(os.path.realpath(__file__))
-        with open(path + '/config/' + config + '.config', 'r') as f:
-            settings = json.load(f)
+        self.path = os.path.dirname(os.path.realpath(__file__))
+        with open(self.path + '/config/' + config + '.config', 'r') as f:
+            self.settings = json.load(f)
 
         # Empty stimulus
         self.stimulus = None
 
         # Load Settings
-        self.bravery = float(settings['bravery'])
-        self.settings = settings
+        self.bravery = float(self.settings['bravery'])
 
         # Load Vocabulary
-        self.vocab = settings['vocab_path']
+        self.vocab = {}
+        path = '{}/vocab/{}/'.format(self.path, self.settings['vocab'])
+        for file in filter(lambda f: f.endswith('.txt'), os.listdir(path)):
+            self.vocab[file.replace('.txt', '')] = self.load_file(path + file)
 
     def post_message(self):
-        """Send Message as Bot.
-
-        Void method in Parent Class.
-        Implemented in Children Classes for specific APIs
-        """
+        """Send Message as Bot."""
         pass
 
     def pre_react_checks(self):
-        """Check before going through react logic.
-
-        Void method in Parent Class.
-        Implemented in Children Classes for specific APIs
-        """
+        """Check before going through react logic."""
         pass
 
     def tag_member(self, reply=False):
-        """Return string that, for given API, tags groupmember.
-
-        Void method in Parent Class.
-        Implemented in Children Classes for specific APIs
-        """
+        """Return string that, for given API, tags groupmember."""
         return ""
 
     def react(self):
@@ -112,13 +102,7 @@ class ChatBot:
         return random.choice([x for x in funcs for y in range(funcs[x])])
 
     def introduce(self):
-        """Introduce Self.
-
-        Input:
-            None
-        Return:
-            Message: Introduction
-        """
+        """Return Message Object with introduction."""
         return Message(
             text='Hello, my name is {}'.format(self.name))
 
@@ -130,22 +114,26 @@ class ChatBot:
         Return
             Message: With completed Mad Lib String
         """
-        def word(word_type):
-            """Return list of options for a given word_type."""
-            return self.tag_member(reply=reply) if word_type == '@tag_member' \
-                else random.choice(self.load_file('/{}/{}.txt'.format(
-                    self.vocab, word_type[1:])))
-
         def pick_sentence():
-            return random.choice(
-                self.load_file('/' + self.vocab + '/sentence.txt'))
+            return random.choice(self.vocab['sentence'])
         sentence = pick_sentence()
+
         while not reply and '@tag_member' not in sentence:
             sentence = pick_sentence()
-        placeholders = re.findall(r'@\w+', sentence)
-        for placeholder in placeholders:
-            sentence = sentence.replace(placeholder, word(placeholder), 1)
-        return Message(text=sentence)
+
+        sentence = sentence.replace('@member', self.tag_member(reply=True))
+        return Message(text=self.sub_placeholders(sentence))
+
+    def sub_placeholders(self, sentence):
+        """Substitute correct words for placeholders for given sentence.
+
+        Won't substitute member tag
+        """
+        for placeholder in re.findall(r'@\w+', sentence):
+            if placeholder[1:] in self.vocab:
+                sentence = sentence.replace(
+                    placeholder, random.choice(self.vocab[placeholder[1:]]), 1)
+        return sentence
 
     def spongebob_mock(self):
         """Capitalize every second letter.
@@ -165,54 +153,53 @@ class ChatBot:
         return Message(
             text=re.sub(r'[A-Za-z]', repl, self.stimulus.text))
 
-    def post_meme(self):
-        """Post Meme.
+    def post_meme(self, original=False):
+        """
+        Post Meme.
 
         Input:
             None
         Return:
             Message: Empty string and list of one attachment = [<meme>]
         """
-        attachments = [Attachment(
-            type='image',
-            url=self.user.upload_photo(
-                self.get_meme(self.settings['subreddits']))
-        )]
-        message = Message(attachments=attachments)
-        return message
+        # Determine function from which to source meme
+        source_meme = self.create_meme if original else self.get_meme
+
+        # Build message with attachments
+        return Message(
+            attachments=[Attachment(
+                type='image',
+                url=source_meme(subreddits=self.settings['subreddits'])
+            )])
 
     def create_meme(self):
         """Create Meme."""
-        member = random.choice(self.get_members())['name'].replace(' ', '_')
-        url = 'https://memegen.link/'
-        formats = random.choice(list(requests.get(
-            url + '/api/templates').json().values()))
-        meme_format = formats.rpartition('/')[2]
-        img_data = requests.get(
-            url + meme_format + '/{}/{}.jpeg'.format(member, member)).content
-        attachments = [Attachment(
-            type='image',
-            url=self.user.upload_photo(
-                img_data)
-        )]
-        message = Message(attachments=attachments)
-        return message
+        # member = random.choice(self.get_members())['name'].replace(' ', '_')
+
+        # Import Meme Data
+        with open(self.path + '/meme/formats.txt', 'r') as f:
+            memes = json.load(f)
+        meme = random.choice(list(memes.items()))
+        meme_text = list(map(
+            lambda x: x.replace(' ', '_'),
+            random.choice(meme[1])))
+        img_url = self.make_meme(meme[0], meme_text[0], meme_text[1])
+        return Message(attachments=[Attachment(type='image', url=img_url)])
 
     def cross_map(self):
         """Mad lib against random user."""
         return self.mad_lib(reply=False)
 
     @staticmethod
-    def load_file(file):
+    def load_file(path):
         """Load txt file into array and return.
 
         Input:
-            String: File path relative to chatbot.py
+            String: Full Path to File
         Return:
             String Array: Lines of file
         """
-        path = os.path.dirname(os.path.realpath(__file__))
-        with open(path + file, 'r') as f:
+        with open(path, 'r') as f:
             array = f.read().splitlines()
         return array
 
@@ -222,7 +209,7 @@ class ChatBot:
         return random.random() < probability
 
     @staticmethod
-    def get_meme(subs):
+    def get_meme(**kwargs):
         """Return Binary Image Data of a Meme.
 
         Input:
@@ -230,7 +217,19 @@ class ChatBot:
         Return:
             Binary Image Data of Picture
         """
+        subs = kwargs.get('subreddits', 'me_irl')
         s = random.choice([x for x in subs for y in range(int(subs[x]))])
         meme_url = requests.get(
             'https://meme-api.herokuapp.com/gimme/{}'.format(s)).json()['url']
-        return requests.get(meme_url).content
+        return requests.get(meme_url)
+
+    @staticmethod
+    def make_meme(meme_format, top, bottom):
+        """Return url of made meme."""
+        url = 'https://memegen.link/'
+        # formats = list(requests.get(
+        #     url + '/api/templates').json().values())
+        # meme_format = random.choice(formats).rpartition('/')[2]
+
+        return requests.get(
+            url + meme_format + '/{}/{}.jpeg'.format(top, bottom))

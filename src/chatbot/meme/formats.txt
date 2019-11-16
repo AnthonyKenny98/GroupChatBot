@@ -1,0 +1,5 @@
+{
+    "ackbar" : [
+        ["When she invites @tag_member back to her room", "It's a Trap"]
+    ]
+}
