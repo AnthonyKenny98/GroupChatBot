@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-15 19:27:49
+# @Last Modified time: 2019-11-16 16:00:32
 
 import os
 import requests
@@ -16,24 +16,26 @@ CREDENTIALS = ['GroupMeAccessToken']
 
 
 class GroupMeChatBot(ChatBot):
-    """Provide ChatBot Class for GroupMe.
+    """
+    Provide ChatBot Class for GroupMe.
 
-    Inherits ChatBot class as parent class
+    Inherits ChatBot class as Parent class
     """
 
     def __init__(self, data, config=None):
-        """Initialize GroupMe Chat Bot Instance.
+        """
+        Initialize GroupMe Chat Bot Instance.
 
-        Input:
-            -data: data posted to bot from GroupMe Webhook
-        Return:
-            None
+        Input
+        -----
+        data: dict
+            Data posted to bot from GroupMe Webhook
         """
         # Init Parent Class
         super().__init__(config)
 
         # Init GroupMeUser instance
-        self.user = GroupMe(self.get_credentials()['GroupMeAccessToken'])
+        self.user = GroupMe(get_credentials()['GroupMeAccessToken'])
         self.user.group_id = data['group_id']
 
         # Init GroupMeBot instance
@@ -48,14 +50,14 @@ class GroupMeChatBot(ChatBot):
         self.stimulus = Message(text=data['text'], sender=data['name'])
 
     def post_message(self, message):
-        """Post message.
-
-        Input:
-            - message: Message instance
-        Return
-            - response: from self.bot.post_message
         """
-        # UNCOMMENT FOR PRODUCTION
+        Post message.
+
+        Input
+        -----
+        message: Message
+
+        """
         for a in message.attachments:
             if a.type == 'image':
                 a.url = self.user.upload_photo(a.url)
@@ -63,21 +65,19 @@ class GroupMeChatBot(ChatBot):
             text=message.text,
             attachments=message.attachments)
 
-        # PRINT FOR TESTING
-        # print(text)
-
     def pre_react_checks(self):
-        """Go through API specific pre-react checks.
+        """
+        Conduct API-specific pre-react checks.
 
-        Input:
-            None
-        Return:
-            - Bool: True if proceed, False if stop
+        Return
+        ------
+        bool
+            True if proceed, False if stop
         """
         return self.stimulus.sender != self.name
 
     def tag_member(self, reply=False):
-        """Return string that for given API tags groupmember."""
+        """Return String that tags group member."""
         return "@" + self.stimulus.sender if reply else \
             "@" + random.choice(self.user.get_members())['name']
 
@@ -85,25 +85,25 @@ class GroupMeChatBot(ChatBot):
         """Get list of members."""
         return self.user.get_members(name)
 
-    @staticmethod
-    def get_credentials():
-        """Return dict of credentials from either secure or example folder.
 
-        To change credentials update the CREDENTIALS constant at the top
-        of this file.
-        """
-        credentials = {}
-        # Get credentials filepath
-        path = os.path.dirname(os.path.realpath(__file__))
-        if os.path.isdir(path + '/secure'):
-            path += '/secure'
-            for credential in CREDENTIALS:
-                with open(path + '/' + credential + '.credentials', 'r') as f:
-                    credentials[credential] = f.read()
-        else:
-            for credential in CREDENTIALS:
-                credentials[credential] = os.environ[credential]
-        return credentials
+def get_credentials():
+    """Return dict of credentials from either secure or example folder.
+
+    To change credentials update the CREDENTIALS constant at the top
+    of this file.
+    """
+    credentials = {}
+    # Get credentials filepath
+    path = os.path.dirname(os.path.realpath(__file__))
+    if os.path.isdir(path + '/secure'):
+        path += '/secure'
+        for credential in CREDENTIALS:
+            with open(path + '/' + credential + '.credentials', 'r') as f:
+                credentials[credential] = f.read()
+    else:
+        for credential in CREDENTIALS:
+            credentials[credential] = os.environ[credential]
+    return credentials
 
 
 class GroupMe:
@@ -149,12 +149,13 @@ class GroupMe:
 
         Return url for img
         """
+        img_data = requests.get(img_url).content
         return requests.post(
             'https://image.groupme.com/pictures',
             headers={
                 'X-Access-Token': self.access_token
             },
-            data=img_url.content).json()['payload']['url']
+            data=img_data).json()['payload']['url']
 
 
 class GroupMeBot:

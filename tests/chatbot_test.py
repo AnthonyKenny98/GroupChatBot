@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 21:49:10
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 14:26:08
+# @Last Modified time: 2019-11-16 15:25:03
 
 from src.chatbot import ChatBot
 from src.message import Message
@@ -14,9 +14,9 @@ def test_init():
     c = ChatBot()
 
     # self.bravery
-    assert type(c.bravery) is float
-    assert c.bravery <= 1
-    assert c.bravery >= 0
+    assert type(c.settings['bravery']) is float
+    assert c.settings['bravery'] <= 1
+    assert c.settings['bravery'] >= 0
 
     # self.stimulus
     assert c.stimulus is None
@@ -93,8 +93,3 @@ def test_load_file():
     # assert type(ChatBot.load_file('/vocab/default/noun.txt')) is list
     # assert len(ChatBot.load_file('/vocab/default/noun.txt')) > 0
     pass
-
-
-def test_decision_true():
-    """Test static method returns bool."""
-    assert type(ChatBot.decision_true()) is bool

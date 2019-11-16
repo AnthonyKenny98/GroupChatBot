@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 14:25:29
+# @Last Modified time: 2019-11-16 16:01:35
 
 import json
 import os
@@ -22,25 +22,18 @@ class ChatBot:
     """
 
     def __init__(self, config=None):
-        """Initialize ChatBot.
-
-        Input:
-            - config: file name of settings. Format *.config
-        Returns:
-            Void
-        """
-        if config is None:
-            config = 'default'
+        """Initialize ChatBot."""
         # Import config settings
+        config = 'default' if config is None else config
         self.path = os.path.dirname(os.path.realpath(__file__))
         with open(self.path + '/config/' + config + '.config', 'r') as f:
             self.settings = json.load(f)
 
-        # Empty stimulus
-        self.stimulus = None
+        # Adjust settings types
+        self.settings['bravery'] = float(self.settings['bravery'])
 
-        # Load Settings
-        self.bravery = float(self.settings['bravery'])
+        # Empty stimulus, loaded in Child.init()
+        self.stimulus = None
 
         # Load Vocabulary
         self.vocab = {}
@@ -61,13 +54,7 @@ class ChatBot:
         return ""
 
     def react(self):
-        """React to message that awoke the bot.
-
-        Input:
-            None
-        Return:
-            Void
-        """
+        """React to message that awoke the bot."""
         # Execute Logic to decide whether to react
         #   1) Conduct API specific pre-react checks
         if not self.pre_react_checks():
@@ -77,73 +64,64 @@ class ChatBot:
         if self.name.lower() not in self.stimulus.text.lower():
             #   3) With probability inversely proportional to bravery setting,a
             #   don't react
-            if self.bravery < random.uniform(0, 1):
+            if self.settings['bravery'] < random.uniform(0, 1):
                 return
 
         # Post response
         self.post_message(self.choose_function()())
 
     def choose_function(self):
-        """Choose a function from a list according to a certain probability.
-
-        Input:
-            None
-        Return:
-            Class Method Instance
-        """
-        pdf = self.settings["random_function_call_pdf"]
-        funcs = {
-            self.mad_lib: int(pdf['mad_lib']),
-            self.spongebob_mock: int(pdf['spongebob_mock']),
-            self.post_meme: int(pdf['post_meme']),
-            self.cross_map: int(pdf['cross_map']),
-            self.create_meme: int(pdf['create_meme'])
+        """Return a class method according to probability in config file."""
+        selector = {
+            'mad_lib': self.mad_lib,
+            'spongebob_mock': self.spongebob_mock,
+            'post_meme': self.meme,
+            'cross_map': self.cross_map,
+            'create_meme': self.create_meme
         }
+        funcs = {}
+        for key, val in self.settings['random_function_call_pdf'].items():
+            funcs[selector[key]] = int(val)
         return random.choice([x for x in funcs for y in range(funcs[x])])
 
     def introduce(self):
         """Return Message Object with introduction."""
-        return Message(
-            text='Hello, my name is {}'.format(self.name))
+        return Message(text='Hello, my name is {}'.format(self.name))
 
     def mad_lib(self, reply=True):
-        """Return Mad Lib from vocab.
-
-        Input:
-            None
-        Return
-            Message: With completed Mad Lib String
         """
-        def pick_sentence():
-            return random.choice(self.vocab['sentence'])
-        sentence = pick_sentence()
+        Create Mad Lib from self.vocab.
 
-        while not reply and '@tag_member' not in sentence:
-            sentence = pick_sentence()
+        Return
+        ------
+        Message
+            text = Comleted Mad Lib
+        """
+        # Choose Sentence
+        sentence = ''
+        while sentence == '' or (not reply and '@member' not in sentence):
+            sentence = random.choice(self.vocab['sentence'])
 
-        sentence = sentence.replace('@member', self.tag_member(reply=True))
+        # Replace member tag
+        sentence = sentence.replace('@member', self.tag_member(reply=reply))
+
+        # Return Message with placeholders substituted
         return Message(text=self.sub_placeholders(sentence))
 
-    def sub_placeholders(self, sentence):
-        """Substitute correct words for placeholders for given sentence.
-
-        Won't substitute member tag
-        """
-        for placeholder in re.findall(r'@\w+', sentence):
-            if placeholder[1:] in self.vocab:
-                sentence = sentence.replace(
-                    placeholder, random.choice(self.vocab[placeholder[1:]]), 1)
-        return sentence
+    def cross_map(self):
+        """Mad lib against a random user."""
+        return self.mad_lib(reply=False)
 
     def spongebob_mock(self):
-        """Capitalize every second letter.
+        """
+        Capitalize every second letter.
 
         Credit: https://stackoverflow.com/a/17865821
 
-        Input:
-            None
-        Return:
-            Message: With alternating capitalized version of self.stimulus.text
+        Return
+        ------
+        Message
+            text = Alternating capitalized version of self.stimulus.text
         """
         cap = [True]
 
@@ -153,14 +131,14 @@ class ChatBot:
         return Message(
             text=re.sub(r'[A-Za-z]', repl, self.stimulus.text))
 
-    def post_meme(self, original=False):
+    def meme(self, original=False):
         """
-        Post Meme.
+        Create a Message with a Meme.
 
-        Input:
-            None
-        Return:
-            Message: Empty string and list of one attachment = [<meme>]
+        Return
+        ------
+        Message
+            attachments = [Attachment(<meme>)]
         """
         # Determine function from which to source meme
         source_meme = self.create_meme if original else self.get_meme
@@ -172,8 +150,19 @@ class ChatBot:
                 url=source_meme(subreddits=self.settings['subreddits'])
             )])
 
+    def sub_placeholders(self, sentence):
+        """Substitute correct words for placeholders for given sentence.
+
+        Won't substitute @member
+        """
+        for placeholder in re.findall(r'@\w+', sentence):
+            if placeholder[1:] in self.vocab:
+                sentence = sentence.replace(
+                    placeholder, random.choice(self.vocab[placeholder[1:]]), 1)
+        return sentence
+
     def create_meme(self):
-        """Create Meme."""
+        """(In Development) Create Meme."""
         # member = random.choice(self.get_members())['name'].replace(' ', '_')
 
         # Import Meme Data
@@ -186,42 +175,26 @@ class ChatBot:
         img_url = self.make_meme(meme[0], meme_text[0], meme_text[1])
         return Message(attachments=[Attachment(type='image', url=img_url)])
 
-    def cross_map(self):
-        """Mad lib against random user."""
-        return self.mad_lib(reply=False)
-
     @staticmethod
     def load_file(path):
-        """Load txt file into array and return.
-
-        Input:
-            String: Full Path to File
-        Return:
-            String Array: Lines of file
-        """
+        """Load txt file lines into array and return."""
         with open(path, 'r') as f:
             array = f.read().splitlines()
         return array
 
     @staticmethod
-    def decision_true(probability=0.5):
-        """Return True with given probability."""
-        return random.random() < probability
-
-    @staticmethod
     def get_meme(**kwargs):
         """Return Binary Image Data of a Meme.
 
-        Input:
-            None
-        Return:
-            Binary Image Data of Picture
+        Return
+        ------
+            url
         """
         subs = kwargs.get('subreddits', 'me_irl')
         s = random.choice([x for x in subs for y in range(int(subs[x]))])
         meme_url = requests.get(
             'https://meme-api.herokuapp.com/gimme/{}'.format(s)).json()['url']
-        return requests.get(meme_url)
+        return meme_url
 
     @staticmethod
     def make_meme(meme_format, top, bottom):

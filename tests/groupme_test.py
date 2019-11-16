@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 14:58:25
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 14:26:01
+# @Last Modified time: 2019-11-16 15:25:08
 
 import os
 import pytest
@@ -34,9 +34,9 @@ def test_init():
     g = GroupMeChatBot(TEST_DATA)
 
     # self.bravery
-    assert type(g.bravery) is float
-    assert g.bravery <= 1
-    assert g.bravery >= 0
+    assert type(g.settings['bravery']) is float
+    assert g.settings['bravery'] <= 1
+    assert g.settings['bravery'] >= 0
 
     # self.stimulus
     assert g.stimulus is not None
@@ -100,8 +100,3 @@ def test_load_file():
     # assert type(GroupMeChatBot.load_file('/vocab/default/noun.txt')) is list
     # assert len(GroupMeChatBot.load_file('/vocab/default/noun.txt')) > 0
     pass
-
-
-def test_decision_true():
-    """Test static method returns bool."""
-    assert type(GroupMeChatBot.decision_true()) is bool
