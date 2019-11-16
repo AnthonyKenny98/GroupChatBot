@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 16:25:14
+# @Last Modified time: 2019-11-16 16:27:43
 
 import json
 import os
@@ -73,10 +73,13 @@ class ChatBot:
     def choose_function(self):
         """Return a class method according to probability in config file."""
         # Parse stimulus
+        pdf = self.settings['random_function_call_pdf']
         if 'meme' in self.stimulus.text.lower():
             options = [self.meme]
         elif self.name.lower() in self.stimulus.text.lower():
-            options = [self.mad_lib]
+            options = [
+                self.mad_lib * pdf['mad_lib'],
+                self.spongebob_mock * pdf['spongebob_mock']]
         else:
             selector = {
                 'mad_lib': self.mad_lib,
