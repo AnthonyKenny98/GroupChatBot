@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 16:30:22
+# @Last Modified time: 2019-11-16 16:31:40
 
 import json
 import os
@@ -77,8 +77,8 @@ class ChatBot:
         if 'meme' in self.stimulus.text.lower():
             options = [self.meme]
         elif self.name.lower() in self.stimulus.text.lower():
-            options = [self.mad_lib] * pdf['mad_lib'] + \
-                [self.spongebob_mock] * pdf['spongebob_mock']
+            options = [self.mad_lib] * int(pdf['mad_lib']) + \
+                [self.spongebob_mock] * int(pdf['spongebob_mock'])
         else:
             selector = {
                 'mad_lib': self.mad_lib,
