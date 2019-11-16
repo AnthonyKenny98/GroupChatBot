@@ -3,7 +3,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-09 11:47:53
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 16:00:32
+# @Last Modified time: 2019-11-16 17:49:35
 
 import os
 import requests
@@ -82,8 +82,12 @@ class GroupMeChatBot(ChatBot):
             "@" + random.choice(self.user.get_members())['name']
 
     def get_members(self, name=None):
-        """Get list of members."""
-        return self.user.get_members(name)
+        """Get list of members, including bots."""
+        members = self.user.get_members(name)
+        if name is None:
+            members += [b for b in self.user.get_bots() if
+                        b['group_id'] == self.user.group_id]
+        return members
 
 
 def get_credentials():
