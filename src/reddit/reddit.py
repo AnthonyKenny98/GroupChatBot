@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-16 18:35:52
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-17 14:18:13
+# @Last Modified time: 2019-11-17 14:22:36
 
 import praw
 import os
@@ -24,7 +24,7 @@ class Reddit:
             client_secret=creds['RedditClientSecret'],
             user_agent=USER_AGENT)
 
-    def get_submissions(self, subreddit, method='rand', limit=100,):
+    def get_submissions(self, subreddit, method='rand', limit=100):
         """Get submissions from a given subreddit."""
         method_selector = {
             'hot': self.reddit.subreddit(subreddit).hot,

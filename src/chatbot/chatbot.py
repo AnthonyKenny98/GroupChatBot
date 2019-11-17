@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-17 14:16:27
+# @Last Modified time: 2019-11-17 14:41:00
 
 import json
 import os
@@ -71,16 +71,6 @@ class ChatBot:
         # Post response
         self.post_message(self.choose_function()())
 
-    def reddit_roast(self):
-        """Pull Roast from Reddit."""
-        r = Reddit()
-        submission = random.choice(r.get_submissions('roastme', method='hot'))
-        comments = r.get_comments(submission)
-        roasts = []
-        [roasts.append(comment.body) for comment in comments
-            if 'you' in comment.body.lower()]
-        return Message(text=random.choice(roasts))
-
     def choose_function(self):
         """Return a class method according to probability in config file."""
         # Parse stimulus
@@ -96,7 +86,8 @@ class ChatBot:
                 'spongebob_mock': self.spongebob_mock,
                 'post_meme': self.meme,
                 'cross_map': self.cross_map,
-                'create_meme': self.create_meme
+                'create_meme': self.create_meme,
+                'reddit_roast': self.reddit_roast
             }
             funcs = {}
             for key, val in self.settings['random_function_call_pdf'].items():
@@ -129,8 +120,16 @@ class ChatBot:
         return Message(text=self.sub_placeholders(sentence))
 
     def cross_map(self):
-        """Mad lib against a random user."""
-        return self.mad_lib(reply=False)
+        """Mad lib or reddit roast against a random user."""
+        selector = {
+            'mad_lib': self.mad_lib,
+            'reddit_roast': self.reddit_roast
+        }
+        funcs = {}
+        for key, val in selector.items():
+            funcs[val] = int(self.settings['random_function_call_pdf'][key])
+        options = [x for x in funcs for y in range(funcs[x])]
+        return random.choice(options)(reply=False)
 
     def spongebob_mock(self):
         """
@@ -169,6 +168,18 @@ class ChatBot:
                 type='image',
                 url=source_meme(subreddits=self.settings['subreddits'])
             )])
+
+    def reddit_roast(self, reply=True):
+        """Pull Roast from Reddit."""
+        r = Reddit()
+
+        submission = random.choice(r.get_submissions('roastme', method='hot'))
+        comments = r.get_comments(submission)
+        roasts = []
+        [roasts.append(comment.body) for comment in comments
+            if 'you' in comment.body.lower()]
+        roast = self.tag_member(reply=reply) + ' ' + random.choice(roasts)
+        return Message(text=roast)
 
     def sub_placeholders(self, sentence):
         """Substitute correct words for placeholders for given sentence.
@@ -210,11 +221,11 @@ class ChatBot:
         ------
             url
         """
-        subs = kwargs.get('subreddits', 'me_irl')
+        subs = kwargs.get('subreddits', {'me_irl': "1"})
         s = random.choice([x for x in subs for y in range(int(subs[x]))])
-        meme_url = requests.get(
-            'https://meme-api.herokuapp.com/gimme/{}'.format(s)).json()['url']
-        return meme_url
+        memes = list(filter(lambda p: Reddit.is_img_url(p.url),
+                            Reddit().get_submissions(s, method='hot')))
+        return random.choice(memes).url
 
     @staticmethod
     def make_meme(meme_format, top, bottom):
