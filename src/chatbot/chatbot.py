@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-16 17:42:34
+# @Last Modified time: 2019-11-17 14:16:27
 
 import json
 import os
@@ -13,6 +13,7 @@ import re
 import requests
 
 from ..message import Message, Attachment
+from ..reddit import Reddit
 
 
 class ChatBot:
@@ -69,6 +70,16 @@ class ChatBot:
 
         # Post response
         self.post_message(self.choose_function()())
+
+    def reddit_roast(self):
+        """Pull Roast from Reddit."""
+        r = Reddit()
+        submission = random.choice(r.get_submissions('roastme', method='hot'))
+        comments = r.get_comments(submission)
+        roasts = []
+        [roasts.append(comment.body) for comment in comments
+            if 'you' in comment.body.lower()]
+        return Message(text=random.choice(roasts))
 
     def choose_function(self):
         """Return a class method according to probability in config file."""
