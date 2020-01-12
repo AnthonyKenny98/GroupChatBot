@@ -81,7 +81,7 @@ Mad Libs are set up by you! Navigate to `src/charbot/vocab/default`. Here there 
 Additionally, you can add your own dictionaries (new folders within vocab with a similar structure) or add files to the default vocabulary, and reference with the same "@" syntax within sentence.txt.
 
 ### Spongebob Mock
-<img src="img/Spongebob-Mock.jpg" alt="project logo image" width="100"/>
+<img src="img/Spongebob-Mock.jpg" alt="Spongebob-Mock Image" width="100"/>
 
 This function replies to a user, superimposing their text over the above image and capitalising ever second letter.
 
