@@ -4,13 +4,12 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2020-01-12 17:24:17
+# @Last Modified time: 2020-01-12 17:33:45
 
 import json
 import os
 import random
 import re
-import requests
 
 from ..message import Message, Attachment
 from ..reddit import Reddit
@@ -86,7 +85,6 @@ class ChatBot:
                 'spongebob_mock': self.spongebob_mock,
                 'post_meme': self.meme,
                 'cross_map': self.cross_map,
-                'create_meme': self.create_meme,
                 'reddit_roast': self.reddit_roast
             }
             funcs = {}
@@ -197,20 +195,6 @@ class ChatBot:
                     placeholder, random.choice(self.vocab[placeholder[1:]]), 1)
         return sentence
 
-    def create_meme(self):
-        """(In Development) Create Meme."""
-        # member = random.choice(self.get_members())['name'].replace(' ', '_')
-
-        # Import Meme Data
-        with open(self.path + '/meme/formats.txt', 'r') as f:
-            memes = json.load(f)
-        meme = random.choice(list(memes.items()))
-        meme_text = list(map(
-            lambda x: x.replace(' ', '_'),
-            random.choice(meme[1])))
-        img_url = self.make_meme(meme[0], meme_text[0], meme_text[1])
-        return Message(attachments=[Attachment(type='image', url=img_url)])
-
     @staticmethod
     def load_file(path):
         """Load txt file lines into array and return."""
@@ -231,14 +215,3 @@ class ChatBot:
         memes = list(filter(lambda p: Reddit.is_img_url(p.url),
                             Reddit().get_submissions(s, method='hot')))
         return random.choice(memes).url
-
-    @staticmethod
-    def make_meme(meme_format, top, bottom):
-        """Return url of made meme."""
-        url = 'https://memegen.link/'
-        # formats = list(requests.get(
-        #     url + '/api/templates').json().values())
-        # meme_format = random.choice(formats).rpartition('/')[2]
-
-        return requests.get(
-            url + meme_format + '/{}/{}.jpeg'.format(top, bottom))
