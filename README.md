@@ -3,6 +3,8 @@
 # Group Chat Bot &middot; [![Known Vulnerabilities](https://snyk.io/test/github/AnthonyKenny98/GroupChatBot/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AnthonyKenny98/GroupChatBot?targetFile=requirements.txt) [![Build Status](https://travis-ci.org/AnthonyKenny98/GroupChatBot.svg?branch=master)](https://travis-ci.org/AnthonyKenny98/GroupChatBot) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/AnthonyKenny98/Vend_Inventory_Upload/blob/master/LICENSE)
 > Fun ChatBot to be inserted into group chats.
 
+What started with a joke amongst friends to use the GroupMe API to analyse whose messages got the most average likes, GroupMeBot soon became an entertaining side project as a study break during my Senior Thesis. GroupChatBot can currently integrate into any GroupMe chat and act as its own entertaining character. It uses multiple APIs, is mainly written in Python, and was a good opportunity to keep practicing my skills in developing larger projects from scratch.
+
 This ChatBot can currently support the following:
   - GroupMe
   
