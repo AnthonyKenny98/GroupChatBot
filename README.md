@@ -10,6 +10,7 @@ This ChatBot can currently support the following:
 
 + [Prerequisites](#prereq)
 + [Installation/Setup](#setup): Instructions for setting up your own chatbot.
++ [Features](#features): What can the GroupChatBot do?
 + [API Reference](#api)
 + [Licensing](#license)
 
@@ -50,6 +51,49 @@ The following can be repeated for as many bots in as many groupchats as you woul
   $ ./scripts/bot_setup.sh
   ```
 Congratulations, you have set up your first bot!
+
+## <a name="features"></a>Features
+
+Currently, GroupChatBot can do the following actions once inserted into your group:
+
+### Mad Lib
+_Mad Libs is a phrasal template word game where one player prompts others for a list of words to substitute for blanks in a story before reading the – often comical or nonsensical – story aloud. The game is frequently played as a party game or as a pastime. [Wikipedia](https://en.wikipedia.org/wiki/Mad_Libs)_
+
+Mad Libs are set up by you! Navigate to `src/charbot/vocab/default`. Here there should be three files: `sentence.txt`, `adjective.txt` and `noun.txt`. You can add your own sentences, adjectives and nouns. See below for an example
+
+```
+  # sentence.txt
+  This is a @adjective @noun.
+  
+  # adjective.txt
+  cool
+  new
+  bad
+  good
+  example
+  
+  # noun.txt
+  sentence
+  string of words
+  phrase
+```
+
+Additionally, you can add your own dictionaries (new folders within vocab with a similar structure) or add files to the default vocabulary, and reference with the same "@" syntax within sentence.txt.
+
+### Spongebob Mock
+<img src="img/mrchatterbox.png" alt="project logo image" width="100"/>
+
+This function replies to a user, superimposing their text over the above image and capitalising ever second letter.
+
+### Post Meme
+This pulls a random meme from a subreddit of your specification (see Configuration section) and posts it to the Group.
+
+### Reddit Roast
+This pulls a random comment from the popular subreddit r/roastme and posts it to the group.
+
+### Cross Map
+This aims either a Mad Lib or Reddit Roast at a random group member. 
+
 
 ## <a name="api"></a>Api Reference
 
