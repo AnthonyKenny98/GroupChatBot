@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2019-11-17 14:41:00
+# @Last Modified time: 2020-01-12 17:24:17
 
 import json
 import os
@@ -173,12 +173,17 @@ class ChatBot:
         """Pull Roast from Reddit."""
         r = Reddit()
 
+        def censored(text):
+            return self.banned in text
+
         submission = random.choice(r.get_submissions('roastme', method='hot'))
         comments = r.get_comments(submission)
         roasts = []
         [roasts.append(comment.body) for comment in comments
             if 'you' in comment.body.lower()]
         roast = self.tag_member(reply=reply) + ' ' + random.choice(roasts)
+        if censored(roast):
+            return Message(text=self.reddit_roast(reply=reply))
         return Message(text=roast)
 
     def sub_placeholders(self, sentence):
