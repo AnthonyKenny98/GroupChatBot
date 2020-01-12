@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2020-01-12 17:33:45
+# @Last Modified time: 2020-01-12 18:06:32
 
 import json
 import os
@@ -172,7 +172,8 @@ class ChatBot:
         r = Reddit()
 
         def censored(text):
-            return self.banned in text
+            for banned in self.settings["banned"]:
+                return banned in text
 
         submission = random.choice(r.get_submissions('roastme', method='hot'))
         comments = r.get_comments(submission)
