@@ -98,7 +98,7 @@ This aims either a Mad Lib or Reddit Roast at a random group member.
 ## <a name="config"></a>Configuration
 The GroupChatBot determines which of the above actions to take based on a probability distribution function. You can edit this by putting an integer next to each of the actions within `src/chatbot/config.txt`. These integers do not need to sum to any particular number.
 
-You can also select which subreddits you want the bot to pull memes from within this file.
+You can also select which subreddits you want the bot to pull memes from, and banned words from reddit roasts, within this file.
 
 ## <a name="api"></a>Api Reference
 
