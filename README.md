@@ -11,6 +11,7 @@ This ChatBot can currently support the following:
 + [Prerequisites](#prereq)
 + [Installation/Setup](#setup): Instructions for setting up your own chatbot.
 + [Features](#features): What can the GroupChatBot do?
++ [Configuration](#config): What can the GroupChatBot do?
 + [API Reference](#api)
 + [Licensing](#license)
 
@@ -81,7 +82,7 @@ Mad Libs are set up by you! Navigate to `src/charbot/vocab/default`. Here there 
 Additionally, you can add your own dictionaries (new folders within vocab with a similar structure) or add files to the default vocabulary, and reference with the same "@" syntax within sentence.txt.
 
 ### Spongebob Mock
-<img src="img/mrchatterbox.png" alt="project logo image" width="100"/>
+<img src="img/Mocking-Spongebob.jpg" alt="Spongebob-Mock Image" width="250"/>
 
 This function replies to a user, superimposing their text over the above image and capitalising ever second letter.
 
@@ -94,6 +95,10 @@ This pulls a random comment from the popular subreddit r/roastme and posts it to
 ### Cross Map
 This aims either a Mad Lib or Reddit Roast at a random group member. 
 
+## <a name="config"></a>Configuration
+The GroupChatBot determines which of the above actions to take based on a probability distribution function. You can edit this by putting an integer next to each of the actions within `src/chatbot/config.txt`. These integers do not need to sum to any particular number.
+
+You can also select which subreddits you want the bot to pull memes from, and banned words from reddit roasts, within this file.
 
 ## <a name="api"></a>Api Reference
 
