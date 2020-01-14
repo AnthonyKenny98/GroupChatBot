@@ -13,7 +13,7 @@ This ChatBot can currently support the following:
 + [Prerequisites](#prereq)
 + [Installation/Setup](#setup): Instructions for setting up your own chatbot.
 + [Features](#features): What can the GroupChatBot do?
-+ [Configuration](#config): What can the GroupChatBot do?
++ [Configuration](#config)
 + [API Reference](#api)
 + [Licensing](#license)
 
