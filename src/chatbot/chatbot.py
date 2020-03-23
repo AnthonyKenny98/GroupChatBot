@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2020-01-12 18:06:32
+# @Last Modified time: 2020-03-23 19:21:54
 
 import json
 import os
@@ -74,23 +74,17 @@ class ChatBot:
         """Return a class method according to probability in config file."""
         # Parse stimulus
         pdf = self.settings['random_function_call_pdf']
-        if 'meme' in self.stimulus.text.lower():
-            options = [self.meme]
-        elif self.name.lower() in self.stimulus.text.lower():
-            options = [self.mad_lib] * int(pdf['mad_lib']) + \
-                [self.spongebob_mock] * int(pdf['spongebob_mock'])
-        else:
-            selector = {
-                'mad_lib': self.mad_lib,
-                'spongebob_mock': self.spongebob_mock,
-                'post_meme': self.meme,
-                'cross_map': self.cross_map,
-                'reddit_roast': self.reddit_roast
-            }
-            funcs = {}
-            for key, val in self.settings['random_function_call_pdf'].items():
-                funcs[selector[key]] = int(val)
-            options = [x for x in funcs for y in range(funcs[x])]
+        selector = {
+            'mad_lib': self.mad_lib,
+            'spongebob_mock': self.spongebob_mock,
+            'post_meme': self.meme,
+            'cross_map': self.cross_map,
+            'reddit_roast': self.reddit_roast
+        }
+        funcs = {}
+        for key, val in pdf.items():
+            funcs[selector[key]] = int(val)
+        options = [x for x in funcs for y in range(funcs[x])]
         return random.choice(options)
 
     def introduce(self):
