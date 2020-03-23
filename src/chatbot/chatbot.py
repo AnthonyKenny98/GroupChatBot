@@ -4,7 +4,7 @@
 # @Author: AnthonyKenny98
 # @Date:   2019-11-11 13:31:40
 # @Last Modified by:   AnthonyKenny98
-# @Last Modified time: 2020-03-23 19:21:54
+# @Last Modified time: 2020-03-23 19:39:57
 
 import json
 import os
@@ -43,19 +43,23 @@ class ChatBot:
 
     def post_message(self):
         """Send Message as Bot."""
+        """Implemented in Child."""
         pass
 
     def pre_react_checks(self):
         """Check before going through react logic."""
+        """Implemented in Child."""
         pass
 
     def tag_member(self, reply=False):
         """Return string that, for given API, tags groupmember."""
+        """Implemented in Child."""
         return ""
 
     def react(self):
         """React to message that awoke the bot."""
         # Execute Logic to decide whether to react
+
         #   1) Conduct API specific pre-react checks
         if not self.pre_react_checks():
             return
@@ -77,9 +81,7 @@ class ChatBot:
         selector = {
             'mad_lib': self.mad_lib,
             'spongebob_mock': self.spongebob_mock,
-            'post_meme': self.meme,
-            'cross_map': self.cross_map,
-            'reddit_roast': self.reddit_roast
+            'post_meme': self.meme
         }
         funcs = {}
         for key, val in pdf.items():
@@ -110,18 +112,6 @@ class ChatBot:
 
         # Return Message with placeholders substituted
         return Message(text=self.sub_placeholders(sentence))
-
-    def cross_map(self):
-        """Mad lib or reddit roast against a random user."""
-        selector = {
-            'mad_lib': self.mad_lib,
-            'reddit_roast': self.reddit_roast
-        }
-        funcs = {}
-        for key, val in selector.items():
-            funcs[val] = int(self.settings['random_function_call_pdf'][key])
-        options = [x for x in funcs for y in range(funcs[x])]
-        return random.choice(options)(reply=False)
 
     def spongebob_mock(self):
         """
@@ -160,24 +150,6 @@ class ChatBot:
                 type='image',
                 url=source_meme(subreddits=self.settings['subreddits'])
             )])
-
-    def reddit_roast(self, reply=True):
-        """Pull Roast from Reddit."""
-        r = Reddit()
-
-        def censored(text):
-            for banned in self.settings["banned"]:
-                return banned in text
-
-        submission = random.choice(r.get_submissions('roastme', method='hot'))
-        comments = r.get_comments(submission)
-        roasts = []
-        [roasts.append(comment.body) for comment in comments
-            if 'you' in comment.body.lower()]
-        roast = self.tag_member(reply=reply) + ' ' + random.choice(roasts)
-        if censored(roast):
-            return Message(text=self.reddit_roast(reply=reply))
-        return Message(text=roast)
 
     def sub_placeholders(self, sentence):
         """Substitute correct words for placeholders for given sentence.
