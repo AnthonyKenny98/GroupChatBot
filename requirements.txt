@@ -10,7 +10,7 @@ gunicorn==20.0.4
 idna==2.8
 importlib-metadata==0.23
 itsdangerous==1.1.0
-Jinja2==2.10.3
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==7.2.0
@@ -18,7 +18,7 @@ packaging==19.2
 pluggy==0.13.0
 praw==6.4.0
 prawcore==1.0.1
-py==1.8.0
+py==1.10.0
 pycodestyle==2.5.0
 pyflakes==2.1.1
 pyparsing==2.4.4
@@ -27,7 +27,7 @@ pytest-flake8==1.0.4
 requests==2.22.0
 six==1.13.0
 update-checker==0.16
-urllib3==1.25.6
+urllib3==1.26.5
 wcwidth==0.1.7
 websocket-client==0.56.0
 Werkzeug==0.16.0
